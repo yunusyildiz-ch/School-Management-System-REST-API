@@ -1,6 +1,7 @@
 import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
+import User from './models/user.js'
 
 const app = Express();
 
