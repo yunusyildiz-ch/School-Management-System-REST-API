@@ -1,5 +1,6 @@
 import "dotenv/config";
 import  {connectDB} from "./config/db.js";
+import  './models/index.js'
 import app from "./app.js";
 import { createAdminUser } from "./config/setup.js";
 
