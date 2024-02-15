@@ -2,6 +2,7 @@ import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
 import User from './models/user.js';
+import UserDetail from './models/userDetail.js'
 import Teacher from './models/teacher.js';
 import Student from './models/student.js';
 import Class from './models/class.js';
