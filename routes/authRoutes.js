@@ -4,7 +4,7 @@ import { login, register } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.post("/login", passport.authenticate("jwt", { session: false }), login);
+router.post("/login",passport.authenticate("jwt", { session: false }),login);
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),

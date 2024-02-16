@@ -8,7 +8,7 @@ export const registerUser = async (userData) => {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
     const newUser = await User.create({
-      username: userData.username,
+      name: userData.name,
       email: userData.email,
       password: hashedPassword,
       role: userData.role 
@@ -19,10 +19,10 @@ export const registerUser = async (userData) => {
   }
 };
 
-export const loginUser = async (username, password) => {
+export const loginUser = async (email, password) => {
   try {
     
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({where: { email:email } });
     if (!user) {
       throw new Error('User not found');
     }
