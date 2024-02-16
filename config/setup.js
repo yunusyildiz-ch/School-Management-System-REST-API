@@ -13,7 +13,7 @@ export async function createAdminUser() {
     const hashedPassword = await bcrypt.hash("admin", 10);
     await User.create({
       name: "admin",
-      email: "admin@exapmle.com",
+      email: "admin@admin.com",
       password: hashedPassword,
       role: "admin",
     });
