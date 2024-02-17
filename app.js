@@ -10,6 +10,7 @@ import Class from "./models/class.js";
 import Staff from "./models/staff.js";
 import Assignment from "./models/assignment.js";
 import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
@@ -23,6 +24,7 @@ app.use(Morgan("dev"));
 app.use(passport.initialize());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user",userRoutes)
 app.use("/api/class", classRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
