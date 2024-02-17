@@ -71,6 +71,12 @@ const getTeachersOfClass = asyncHandler(async (req, res) => {
   res.status(200).json(teachers);
 });
 
+const getStudentsOfClass = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const students = await classService.getStudentsOfClass(id);
+  res.status(200).json(students);
+});
+
 export {
   createClass,
   getClasses,
@@ -80,4 +86,5 @@ export {
   addTeacherToClass,
   addStudentToClass,
   getTeachersOfClass,
+  getStudentsOfClass
 };

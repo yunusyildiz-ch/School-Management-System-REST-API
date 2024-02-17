@@ -99,6 +99,20 @@ const getTeachersOfClass = async (id) => {
   }
 }
 
+const getStudentsOfClass = async (id) => {
+  try {
+    const existingClass = await Class.findByPk(id);
+    if (!existingClass) {
+      throw new Error("Class not found");
+    }
+
+    const students = await existingClass.getStudents();
+    return students;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   createClass,
   getClasses,
@@ -107,5 +121,6 @@ export {
   deleteClass,
   addTeacherToClass,
   addStudentToClass,
-  getTeachersOfClass
+  getTeachersOfClass,
+  getStudentsOfClass
 };
