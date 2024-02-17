@@ -6,6 +6,14 @@ const Teacher = sequelize.define('Teacher',{
 expertise:{
 type: DataTypes.STRING,
  allowNull: true,
+    },
+    userId:{
+        type:DataTypes.INTEGER,
+        allowNull:false,
+        references:{
+            model:'Users',
+            key:'id'
+        }
     }
 
 });

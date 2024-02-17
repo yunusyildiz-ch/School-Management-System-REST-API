@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+import Student from '../models/student.js';
+import Teacher from '../models/teacher.js';
 
 export const registerUser = async (userData) => {
   try {
@@ -13,6 +15,12 @@ export const registerUser = async (userData) => {
       password: hashedPassword,
       role: userData.role 
     });
+    if (userData.role === 'student') {
+      await Student.create({ userId: newUser.id });
+    } else if (userData.role === 'teacher') {
+      await Teacher.create({ userId: newUser.id });
+    }
+
     return newUser;
   } catch (error) {
     throw error;
