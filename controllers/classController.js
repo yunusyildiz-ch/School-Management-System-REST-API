@@ -77,6 +77,15 @@ const getStudentsOfClass = asyncHandler(async (req, res) => {
   res.status(200).json(students);
 });
 
+const removeTeacherFromClass =asyncHandler(async(req,res)=>{
+  const {id,teacherId} = req.params;
+  const updatedClass = await classService.removeTeacherFromClass(id,teacherId);
+  const successMessage = "Teacher successfully removed from Class.";
+  res
+  .status(200)
+  .json({ success: true, message: successMessage, updatedClass });
+})
+
 export {
   createClass,
   getClasses,
@@ -86,5 +95,6 @@ export {
   addTeacherToClass,
   addStudentToClass,
   getTeachersOfClass,
-  getStudentsOfClass
+  getStudentsOfClass,
+  removeTeacherFromClass
 };
