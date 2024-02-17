@@ -20,4 +20,18 @@ const getClassById = async (id) => {
   return cls;
 };
 
-export { createClass, getClasses, getClassById };
+const updateClass = async (id, classData) => {
+  const existingCls = await Class.findByPk(id);
+  if (!existingCls) {
+    throw new Error("Class not found");
+  }
+  (existingCls.name = classData.name),
+    (existingCls.code = classData.code),
+    (existingCls.counselor = classData.counselor);
+  await existingCls.save();
+  return existingCls;
+};
+
+
+
+export { createClass, getClasses, getClassById,updateClass};

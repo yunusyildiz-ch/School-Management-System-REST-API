@@ -22,4 +22,11 @@ const getClassById = asyncHandler(async (req, res) => {
   res.status(200).json(cls);
 });
 
-export { createClass, getClasses, getClassById };
+const updateClass = asyncHandler(async(req,res)=>{
+  const id = req.params.id;
+  const classData = req.body;
+  const updatedClass = await classService.updateClass(id,classData);
+  res.status(200).json(updatedClass)
+})
+
+export { createClass, getClasses, getClassById ,updateClass};

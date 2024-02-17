@@ -22,5 +22,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   classController.getClassById
 );
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant,
+  classController.updateClass
+);
 
 export default router;
