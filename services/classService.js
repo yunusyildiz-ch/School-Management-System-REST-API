@@ -132,7 +132,30 @@ const removeTeacherFromClass =async (id,teacherId)=>{
   } catch (error) {
     throw error;
   }
+};
+
+const removeStudentFromClass= async(id,studentId)=>{
+  try {
+    const existingClass = await Class.findByPk(id);
+    if (!existingClass) {
+      throw new Error("Class not found");
+    }
+
+    const student = await Student.findByPk(studentId);
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    await existingClass.removeStudent(student);
+
+    const updatedClass = await Class.findByPk(id, { include: [Student] });
+    return updatedClass;
+  } catch (error) {
+    throw error;
+  }
 }
+
+
 
 export {
   createClass,
@@ -144,5 +167,6 @@ export {
   addStudentToClass,
   getTeachersOfClass,
   getStudentsOfClass,
-  removeTeacherFromClass
+  removeTeacherFromClass,
+  removeStudentFromClass
 };

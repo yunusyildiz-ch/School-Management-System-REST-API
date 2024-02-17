@@ -45,4 +45,7 @@ router.delete(
 
   router.delete("/:id/teacher/:teacherId",passport.authenticate("jwt",{session:false}),isAdminOrAssistant,classController.removeTeacherFromClass);
 
+  router.delete("/:id/student/:studentId",passport.authenticate("jwt",{session:false}),isAdminOrAssistant,classController.removeStudentFromClass);
+
+
 export default router;
