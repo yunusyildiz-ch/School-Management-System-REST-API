@@ -12,7 +12,15 @@ router.post(
   classController.createClass
 );
 
-router.get("/",passport.authenticate("jwt", { session: false }), classController.getClasses);
-
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  classController.getClasses
+);
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  classController.getClassById
+);
 
 export default router;

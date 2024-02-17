@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Class from "../models/class.js";
-import * as  classService from "../services/classService.js";
+import * as classService from "../services/classService.js";
 
 const createClass = asyncHandler(async (req, res) => {
   const classData = req.body;
@@ -16,4 +16,10 @@ const getClasses = asyncHandler(async (req, res) => {
   res.status(200).json(classes);
 });
 
-export  { createClass, getClasses };
+const getClassById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const cls = await classService.getClassById(id);
+  res.status(200).json(cls);
+});
+
+export { createClass, getClasses, getClassById };
