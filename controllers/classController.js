@@ -45,4 +45,16 @@ const deleteClass = asyncHandler(async (req, res) => {
     .json({ success: true, message: successMessage, note: note, deletedClass });
 });
 
-export { createClass, getClasses, getClassById, updateClass, deleteClass };
+const addTeacherToClass = asyncHandler(async(req,res)=>{
+const {id,teacherId} = req.params
+  const updatedClass = await classService.addTeacherToClass(id,teacherId);
+  const successMessage = "Teacher successfully added to Class.";
+  const note = "The Teacher has been permanently added to the Class in database.";
+
+  res
+    .status(200)
+    .json({ success: true, message: successMessage, note: note, updatedClass});
+});
+
+
+export { createClass, getClasses, getClassById, updateClass, deleteClass,addTeacherToClass };

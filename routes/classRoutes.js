@@ -35,4 +35,6 @@ router.delete(
   isAdminOrAssistant,
   classController.deleteClass)
 
+  router.post("/:id/teacher/:teacherId",passport.authenticate("jwt", { session:false}), isAdminOrAssistant,classController.addTeacherToClass);
+
 export default router;
