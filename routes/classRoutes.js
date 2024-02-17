@@ -37,4 +37,8 @@ router.delete(
 
   router.post("/:id/teacher/:teacherId",passport.authenticate("jwt", { session:false}), isAdminOrAssistant,classController.addTeacherToClass);
 
+  router.post("/:id/student/:studentId",passport.authenticate("jwt", {session:false}), isAdminOrAssistant,classController.addStudentToClass);
+
+  router.get("/:id/teacher",passport.authenticate("jwt",{session:false}),isAdminOrAssistant,classController.getTeachersOfClass)
+
 export default router;

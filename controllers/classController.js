@@ -45,16 +45,39 @@ const deleteClass = asyncHandler(async (req, res) => {
     .json({ success: true, message: successMessage, note: note, deletedClass });
 });
 
-const addTeacherToClass = asyncHandler(async(req,res)=>{
-const {id,teacherId} = req.params
-  const updatedClass = await classService.addTeacherToClass(id,teacherId);
+const addTeacherToClass = asyncHandler(async (req, res) => {
+  const { id, teacherId } = req.params;
+  const updatedClass = await classService.addTeacherToClass(id, teacherId);
   const successMessage = "Teacher successfully added to Class.";
-  const note = "The Teacher has been permanently added to the Class in database.";
 
   res
     .status(200)
-    .json({ success: true, message: successMessage, note: note, updatedClass});
+    .json({ success: true, message: successMessage, updatedClass });
+});
+
+const addStudentToClass = asyncHandler(async (req, res) => {
+  const { id, studentId } = req.params;
+  const updatedClass = await classService.addStudentToClass(id, studentId);
+  const successMessage = "Student successfully added to Class.";
+  res
+    .status(200)
+    .json({ success: true, messages: successMessage, updatedClass });
 });
 
 
-export { createClass, getClasses, getClassById, updateClass, deleteClass,addTeacherToClass };
+const getTeachersOfClass = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const teachers = await classService.getTeachersOfClass(id);
+  res.status(200).json(teachers);
+});
+
+export {
+  createClass,
+  getClasses,
+  getClassById,
+  updateClass,
+  deleteClass,
+  addTeacherToClass,
+  addStudentToClass,
+  getTeachersOfClass,
+};
