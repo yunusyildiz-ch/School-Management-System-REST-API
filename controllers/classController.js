@@ -22,11 +22,27 @@ const getClassById = asyncHandler(async (req, res) => {
   res.status(200).json(cls);
 });
 
-const updateClass = asyncHandler(async(req,res)=>{
+const updateClass = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const classData = req.body;
-  const updatedClass = await classService.updateClass(id,classData);
-  res.status(200).json(updatedClass)
-})
+  const updatedClass = await classService.updateClass(id, classData);
+  const successMessage = "Class successfully updated.";
+  const note = "The class information has been updated in the database.";
 
-export { createClass, getClasses, getClassById ,updateClass};
+  res
+    .status(200)
+    .json({ success: true, message: successMessage, note: note, updatedClass });
+});
+
+const deleteClass = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const deletedClass = await classService.deleteClass(id);
+  const successMessage = "Class successfully deleted.";
+  const note = "The class has been permanently deleted from the database.";
+
+  res
+    .status(200)
+    .json({ success: true, message: successMessage, note: note, deletedClass });
+});
+
+export { createClass, getClasses, getClassById, updateClass, deleteClass };

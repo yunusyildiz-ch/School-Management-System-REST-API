@@ -29,4 +29,10 @@ router.put(
   classController.updateClass
 );
 
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant,
+  classController.deleteClass)
+
 export default router;

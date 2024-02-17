@@ -32,6 +32,15 @@ const updateClass = async (id, classData) => {
   return existingCls;
 };
 
+const deleteClass = async (id) => {
+  const existingCls = await Class.findByPk(id);
+  if (!existingCls) {
+    throw new Error("Class not found");
+  }
+  await existingCls.destroy();
+  return existingCls;
+}
 
 
-export { createClass, getClasses, getClassById,updateClass};
+
+export { createClass, getClasses, getClassById,updateClass,deleteClass};
