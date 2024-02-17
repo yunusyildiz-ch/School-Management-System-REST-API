@@ -1,6 +1,7 @@
 import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
+import passport from "./config/passport.js";
 import User from './models/user.js';
 import UserDetail from './models/userDetail.js'
 import Teacher from './models/teacher.js';
@@ -9,6 +10,7 @@ import Class from './models/class.js';
 import Staff from './models/staff.js'
 import Assignment from './models/assignment.js'
 import authRoutes from './routes/authRoutes.js'
+import classRoutes from './routes/classRoutes.js'
 
 const app = Express();
 
@@ -16,11 +18,13 @@ app.use(cors());
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
+app.use(passport.initialize());
 
 
 
 
 
 app.use('/api/auth', authRoutes);
+app.use('/api/class', classRoutes);
 
 export default app;

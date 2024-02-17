@@ -10,7 +10,8 @@ const Class = sequelize.define('Class',{
     name:{
         type:DataTypes.STRING,
         allowNull:false,
-        validate:[3,36]
+        validate:{
+            len:[3,36]}
     },
   
     counselor:{

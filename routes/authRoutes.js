@@ -4,7 +4,7 @@ import { login, register } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.post("/login",passport.authenticate("jwt", { session: false }),login);
+router.post("/login",login); //todo: create custom authentication func. for login or create new Strategy for passport.js
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),
