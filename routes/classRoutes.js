@@ -12,6 +12,7 @@ router.post(
   classController.createClass
 );
 
+router.get("/",passport.authenticate("jwt", { session: false }), classController.getClasses);
 
 
 export default router;

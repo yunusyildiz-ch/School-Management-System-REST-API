@@ -10,4 +10,10 @@ const createClass = async (classData) => {
   return newClass;
 };
 
-export { createClass };
+
+const getClasses = async () => {
+  const classes = await Class.findAll();
+  return classes;
+};
+
+export  { createClass,getClasses };
