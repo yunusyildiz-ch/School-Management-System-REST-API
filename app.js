@@ -11,6 +11,7 @@ import Staff from './models/staff.js'
 import Assignment from './models/assignment.js'
 import authRoutes from './routes/authRoutes.js'
 import classRoutes from './routes/classRoutes.js'
+import teacherRoutes from './routes/teacherRoutes.js'
 
 const app = Express();
 
@@ -26,5 +27,6 @@ app.use(passport.initialize());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/class', classRoutes);
+app.use('/api/teacher', teacherRoutes);
 
 export default app;

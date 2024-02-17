@@ -1,12 +1,19 @@
-import { registerUser, loginUser } from '../services/authService.js';
+import { registerUser, loginUser } from "../services/authService.js";
 
 export const register = async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Unauthorized' });
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Unauthorized" });
     }
-    const { name, email, password, role } = req.body;
-    const newUser = await registerUser({ name, email, password, role });
+    const { name, email, password, role, expertise, classId } = req.body;
+    const newUser = await registerUser({
+      name,
+      email,
+      password,
+      role,
+      expertise,
+      classId,
+    });
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -97,7 +97,7 @@ const getTeachersOfClass = async (id) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
 const getStudentsOfClass = async (id) => {
   try {
@@ -113,7 +113,7 @@ const getStudentsOfClass = async (id) => {
   }
 };
 
-const removeTeacherFromClass =async (id,teacherId)=>{
+const removeTeacherFromClass = async (id, teacherId) => {
   try {
     const existingClass = await Class.findByPk(id);
     if (!existingClass) {
@@ -134,7 +134,7 @@ const removeTeacherFromClass =async (id,teacherId)=>{
   }
 };
 
-const removeStudentFromClass= async(id,studentId)=>{
+const removeStudentFromClass = async (id, studentId) => {
   try {
     const existingClass = await Class.findByPk(id);
     if (!existingClass) {
@@ -153,9 +153,7 @@ const removeStudentFromClass= async(id,studentId)=>{
   } catch (error) {
     throw error;
   }
-}
-
-
+};
 
 export {
   createClass,
@@ -168,5 +166,5 @@ export {
   getTeachersOfClass,
   getStudentsOfClass,
   removeTeacherFromClass,
-  removeStudentFromClass
+  removeStudentFromClass,
 };
