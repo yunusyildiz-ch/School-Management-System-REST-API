@@ -8,4 +8,20 @@ const createStaff = async (userId, expertise) => {
   }
 };
 
-export { createStaff };
+const updateStaff = async (userId,updatedData) => {
+  try {
+    const staff = await Staff.findOne({where:{userId : userId}});
+    if (!staff) {
+      throw new Error("Staff not found");
+    }
+
+    const updatedStaff = await staff.update(updatedData);
+
+    return updatedStaff;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export { createStaff,updateStaff };

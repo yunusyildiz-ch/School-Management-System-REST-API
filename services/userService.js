@@ -48,4 +48,48 @@ const getAllUsers = async () => {
   return users;
 };
 
-export { createUser, getAllUsers };
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+  return user;
+};
+
+const updateUser = async (userId, updatedUserData) => {
+  try {
+    if (updatedUserData.password) {
+      updatedUserData.password = await bcrypt.hash(
+        updatedUserData.password,
+        10
+      );
+    }
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    switch (user.role) {
+      case "student":
+        await StudentService.updateStudent(user.id, updatedUserData);
+        break;
+      case "teacher":
+        await TeacherService.updateTeacher(user.id, updatedUserData);
+        break;
+      case "assistant":
+        await AssistantService.updateAssistant(user.id, updatedUserData);
+        break;
+      case "staff":
+        await StaffService.updateStaff(user.id, updatedUserData);
+        break;
+      default:
+        break;
+    }
+
+    const updatedUser = await user.update(updatedUserData);
+
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { createUser, getAllUsers, getUserById, updateUser };

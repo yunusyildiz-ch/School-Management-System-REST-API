@@ -25,8 +25,20 @@ import * as UserService from '../services/userService.js'
   const getAllUsers = asyncHandler (async(req, res, next)=>{
     const users = await UserService.getAllUsers();
     res.status(200).json(users);
-  })
+  });
+
+  const getUserById = asyncHandler (async(req, res, next)=>{
+    const id = req.params.id;
+    const user = await UserService.getUserById(id);
+    res.status(200).json(user);
+  });
+
+  const updateUser = asyncHandler (async(req, res, next)=>{
+    const id = req.params.id;
+    const user = await UserService.updateUser(id, req.body);
+    res.status(200).json(user);
+  });
 
 
 
-  export {createUser, getAllUsers}
+  export {createUser, getAllUsers,getUserById,updateUser}

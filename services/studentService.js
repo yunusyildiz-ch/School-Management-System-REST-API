@@ -28,4 +28,19 @@ const getAllStudents = async ()=>{
   }
 }
 
-export { createStudent,getAllStudents };
+const updateStudent = async (userId,updatedData) => {
+  try {
+    const student = await Student.findOne({where:{userId : userId}});
+    if (!student) {
+      throw new Error("Student not found");
+    }
+
+    const updatedStudent = await student.update(updatedData);
+
+    return updatedStudent;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { createStudent,getAllStudents,updateStudent };
