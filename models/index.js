@@ -7,6 +7,10 @@ import Mentor from './mentor.js';
 import Class from './class.js';
 import Assignment from './assignment.js';
 import Assistant from './assistant.js';
+import Grade from './grade.js';
+import ClassSchedule from './classSchedule.js';
+import Attendance from './attendance.js';
+
 
 User.hasOne(UserDetail, { foreignKey: 'userId', onDelete: 'CASCADE' });
 UserDetail.belongsTo(User, { foreignKey: 'userId' });
@@ -23,45 +27,34 @@ Mentor.belongsTo(User, { foreignKey: 'userId' });
 User.hasOne(Assistant, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Assistant.belongsTo(User, { foreignKey: 'userId' });
 
-Class.belongsToMany(Teacher, {
-  through: 'ClassTeacher',
-  foreignKey: 'classId',
-});
 
-Teacher.belongsToMany(Class, {
-  through: 'ClassTeacher',
-  foreignKey: 'teacherId',
-});
+Class.belongsToMany(Teacher, { through: 'ClassTeachers', foreignKey: 'classId' });
+Teacher.belongsToMany(Class, { through: 'ClassTeachers', foreignKey: 'teacherId' });
 
-Class.belongsToMany(Student, {
-  through: 'ClassStudent',
-  foreignKey: 'classId',
-});
 
-Student.belongsToMany(Class, {
-  through: 'ClassStudent',
-  foreignKey: 'studentId',
-});
+Class.belongsToMany(Student, { through: 'ClassStudents', foreignKey: 'classId' });
+Student.belongsToMany(Class, { through: 'ClassStudents', foreignKey: 'studentId' });
 
-Assignment.belongsToMany(Student, {
-  through: 'AssignmentStudent',
-  foreignKey: 'assignmentId',
-});
 
-Student.belongsToMany(Assignment, {
-  through: 'AssignmentStudent',
-  foreignKey: 'studentId',
-});
+Assignment.belongsToMany(Class, { through: 'AssignmentClasses', foreignKey: 'assignmentId' });
+Class.belongsToMany(Assignment, { through: 'AssignmentClasses', foreignKey: 'classId' });
 
-Assignment.belongsToMany(Class, {
-  through: 'AssignmentClass',
-  foreignKey: 'assignmentId',
-});
 
-Class.belongsToMany(Assignment, {
-  through: 'AssignmentClass',
-  foreignKey: 'classId',
-});
+Grade.belongsTo(Student, { foreignKey: 'studentId' });
+Grade.belongsTo(Assignment, { foreignKey: 'assignmentId' });
+Student.hasMany(Grade, { foreignKey: 'studentId' });
+Assignment.hasMany(Grade, { foreignKey: 'assignmentId' });
+
+
+Class.hasMany(ClassSchedule, { foreignKey: 'classId' });
+ClassSchedule.belongsTo(Class, { foreignKey: 'classId' });
+
+
+Attendance.belongsTo(Student, { foreignKey: 'studentId' });
+Attendance.belongsTo(ClassSchedule, { foreignKey: 'classScheduleId' });
+Student.hasMany(Attendance, { foreignKey: 'studentId' });
+ClassSchedule.hasMany(Attendance, { foreignKey: 'classScheduleId' });
+
 
 export {
   User,
@@ -72,5 +65,7 @@ export {
   Class,
   Assignment,
   Assistant,
+  Grade,
+  ClassSchedule,
+  Attendance,
 };
-

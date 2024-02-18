@@ -115,4 +115,5 @@ const deleteUser = async (userId) => {
   }
 };
 
+
 export { createUser, getAllUsers, getUserById, updateUser, deleteUser };

@@ -1,6 +1,7 @@
 import Class from "../models/class.js";
 import Teacher from "../models/teacher.js";
 import Student from "../models/student.js";
+import Assignment from "../models/assignment.js";
 
 const createClass = async (classData) => {
   const newClass = await Class.create({
@@ -155,6 +156,33 @@ const removeStudentFromClass = async (id, studentId) => {
   }
 };
 
+const setAssignmentToClass = async (id, assignmentId) => {
+  try {
+    const existingClass = await Class.findByPk(id);
+    if (!existingClass) {
+      throw new Error("Class not found");
+    }
+
+    const assignment = await Assignment.findByPk(assignmentId);
+    if (!assignment) {
+      throw new Error("Assignment not found");
+    }
+
+    await existingClass.addAssignment(assignment);
+
+    const updatedClass = await Class.findByPk(id, { include: [Assignment] });
+    return updatedClass;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getAssignmentsOfClass = async(id)=>{
+  const cls = await Class.findByPk(id);
+  const assignments = cls.getAssignments()
+  return assignments;
+}
+
 export {
   createClass,
   getClasses,
@@ -167,4 +195,6 @@ export {
   getStudentsOfClass,
   removeTeacherFromClass,
   removeStudentFromClass,
+  setAssignmentToClass,
+  getAssignmentsOfClass
 };

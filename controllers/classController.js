@@ -94,6 +94,23 @@ const removeStudentFromClass = asyncHandler(async (req, res) => {
     .json({ success: true, message: successMessage, updatedClass });
 });
 
+const setAssignmentToClass = asyncHandler(async (req, res) => {
+  const { id, assignmentId } = req.params;
+  const updatedClass = await classService.setAssignmentToClass(id, assignmentId);
+  const successMessage = "Assignment successfully added to Class.";
+  res
+   .status(200)
+   .json({ success: true, message: successMessage, updatedClass });
+});
+
+const getAssignmentsOfClass = asyncHandler(async(req,res,next)=>{
+  const id = req.params.id
+  const assignments = await classService.getAssignmentsOfClass(id)
+  res.status(200).json(assignments)
+})
+
+
+
 export {
   createClass,
   getClasses,
@@ -106,4 +123,6 @@ export {
   getStudentsOfClass,
   removeTeacherFromClass,
   removeStudentFromClass,
+  setAssignmentToClass,
+  getAssignmentsOfClass,
 };
