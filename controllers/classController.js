@@ -64,7 +64,6 @@ const addStudentToClass = asyncHandler(async (req, res) => {
     .json({ success: true, messages: successMessage, updatedClass });
 });
 
-
 const getTeachersOfClass = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const teachers = await classService.getTeachersOfClass(id);
@@ -77,26 +76,23 @@ const getStudentsOfClass = asyncHandler(async (req, res) => {
   res.status(200).json(students);
 });
 
-const removeTeacherFromClass =asyncHandler(async(req,res)=>{
-  const {id,teacherId} = req.params;
-  const updatedClass = await classService.removeTeacherFromClass(id,teacherId);
+const removeTeacherFromClass = asyncHandler(async (req, res) => {
+  const { id, teacherId } = req.params;
+  const updatedClass = await classService.removeTeacherFromClass(id, teacherId);
   const successMessage = "Teacher successfully removed from Class.";
   res
-  .status(200)
-  .json({ success: true, message: successMessage, updatedClass });
+    .status(200)
+    .json({ success: true, message: successMessage, updatedClass });
 });
 
-
-const removeStudentFromClass =asyncHandler(async(req,res)=>{
-  const {id,studentId} = req.params;
-  const updatedClass = await classService.removeStudentFromClass(id,studentId);
+const removeStudentFromClass = asyncHandler(async (req, res) => {
+  const { id, studentId } = req.params;
+  const updatedClass = await classService.removeStudentFromClass(id, studentId);
   const successMessage = "Student successfully removed from Class.";
   res
-.status(200).json({success: true,message:successMessage,updatedClass})
-}); 
-
-
-
+    .status(200)
+    .json({ success: true, message: successMessage, updatedClass });
+});
 
 export {
   createClass,
@@ -109,5 +105,5 @@ export {
   getTeachersOfClass,
   getStudentsOfClass,
   removeTeacherFromClass,
-  removeStudentFromClass
+  removeStudentFromClass,
 };

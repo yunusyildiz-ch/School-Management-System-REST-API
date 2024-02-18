@@ -92,4 +92,15 @@ const updateUser = async (userId, updatedUserData) => {
   }
 };
 
-export { createUser, getAllUsers, getUserById, updateUser };
+const deleteUser = async (userId) => {
+  try {
+    const user = await User.findByPk(userId);
+    const deletedUser = await user.destroy();
+
+    return deletedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { createUser, getAllUsers, getUserById, updateUser, deleteUser };

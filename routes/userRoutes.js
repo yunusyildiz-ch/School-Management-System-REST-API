@@ -32,4 +32,11 @@ router.put(
   UserController.updateUser
 );
 
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant,
+  UserController.deleteUser
+);
+
 export default router;

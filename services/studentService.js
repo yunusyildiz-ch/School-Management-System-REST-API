@@ -12,12 +12,12 @@ const createStudent = async (userId, classId) => {
   }
 };
 
-const getAllStudents = async ()=>{
+const getAllStudents = async () => {
   try {
     const students = await User.findAll({
       include: {
         model: Student,
-        attributes: ["id", "userId",],
+        attributes: ["id", "userId"],
       },
       where: { role: "student" },
     });
@@ -26,11 +26,11 @@ const getAllStudents = async ()=>{
   } catch (error) {
     throw error;
   }
-}
+};
 
-const updateStudent = async (userId,updatedData) => {
+const updateStudent = async (userId, updatedData) => {
   try {
-    const student = await Student.findOne({where:{userId : userId}});
+    const student = await Student.findOne({ where: { userId: userId } });
     if (!student) {
       throw new Error("Student not found");
     }
@@ -43,4 +43,4 @@ const updateStudent = async (userId,updatedData) => {
   }
 };
 
-export { createStudent,getAllStudents,updateStudent };
+export { createStudent, getAllStudents, updateStudent };

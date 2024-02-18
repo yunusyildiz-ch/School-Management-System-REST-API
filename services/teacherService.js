@@ -30,9 +30,9 @@ const getAllTeachers = async () => {
   }
 };
 
-const updateTeacher = async (userId,updatedData) => {
+const updateTeacher = async (userId, updatedData) => {
   try {
-    const teacher = await Teacher.findOne({where:{userId : userId}});
+    const teacher = await Teacher.findOne({ where: { userId: userId } });
     if (!teacher) {
       throw new Error("Teacher not found");
     }
@@ -45,4 +45,4 @@ const updateTeacher = async (userId,updatedData) => {
   }
 };
 
-export { createTeacher, getAllTeachers, updateTeacher};
+export { createTeacher, getAllTeachers, updateTeacher };

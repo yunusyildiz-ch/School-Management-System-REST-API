@@ -9,15 +9,15 @@ import Assistant from './assistant.js';
 
 
 
-User.hasOne(UserDetail, { foreignKey: 'userId' });
+User.hasOne(UserDetail, { foreignKey: 'userId',onDelete: "CASCADE" });
 UserDetail.belongsTo(User, { foreignKey: 'userId' });
-User.hasOne(Teacher, { foreignKey: 'userId' });
+User.hasOne(Teacher, { foreignKey: 'userId',onDelete: "CASCADE" });
 Teacher.belongsTo(User, { foreignKey: 'userId' });
-User.hasOne(Student, { foreignKey: 'userId' });
+User.hasOne(Student, { foreignKey: 'userId',onDelete: "CASCADE" });
 Student.belongsTo(User, { foreignKey: 'userId' });
-User.hasOne(Staff, { foreignKey: 'userId' });
+User.hasOne(Staff, { foreignKey: 'userId',onDelete: "CASCADE" });
 Staff.belongsTo(User, { foreignKey: 'userId' });
-User.hasOne(Assistant,{ foreignKey: 'userId' });
+User.hasOne(Assistant,{ foreignKey: 'userId',onDelete: "CASCADE" });
 Assistant.belongsTo(User, { foreignKey: 'userId' });
 Class.belongsToMany(Teacher, { through: 'ClassTeacher', foreignKey: 'classId' });
 Teacher.belongsToMany(Class, { through: 'ClassTeacher', foreignKey: 'teacherId' });
