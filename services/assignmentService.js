@@ -19,7 +19,7 @@ const updateAssignment = async (assignmentId, assignmentData) => {
   if (!assignment) {
     throw new Error('Assignment Not Found.');
   }
-  Object.assign(assignment, assignmentData);
+  await assignment.update(assignmentData);
   await assignment.save();
   return assignment; 
 };

@@ -2,6 +2,7 @@ import Class from "../models/class.js";
 import Teacher from "../models/teacher.js";
 import Student from "../models/student.js";
 import Assignment from "../models/assignment.js";
+import Grade from "../models/grade.js";
 
 const createClass = async (classData) => {
   const newClass = await Class.create({
@@ -170,6 +171,17 @@ const setAssignmentToClass = async (id, assignmentId) => {
 
     await existingClass.addAssignment(assignment);
 
+    const students = await existingClass.getStudents();
+
+    await Promise.all(
+      students.map((student) =>
+        Grade.create({
+          studentId: student.id,
+          assignmentId: assignment.id,
+        })
+      )
+    );
+
     const updatedClass = await Class.findByPk(id, { include: [Assignment] });
     return updatedClass;
   } catch (error) {
@@ -177,11 +189,11 @@ const setAssignmentToClass = async (id, assignmentId) => {
   }
 };
 
-const getAssignmentsOfClass = async(id)=>{
+const getAssignmentsOfClass = async (id) => {
   const cls = await Class.findByPk(id);
-  const assignments = cls.getAssignments()
+  const assignments = cls.getAssignments();
   return assignments;
-}
+};
 
 export {
   createClass,
@@ -196,5 +208,5 @@ export {
   removeTeacherFromClass,
   removeStudentFromClass,
   setAssignmentToClass,
-  getAssignmentsOfClass
+  getAssignmentsOfClass,
 };

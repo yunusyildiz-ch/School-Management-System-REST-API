@@ -7,15 +7,6 @@ const Assignment = sequelize.define("Assignment", {
     allowNull: false,
   },
 
-  grade: {
-    type: DataTypes.FLOAT,
-    allowNull: true,
-    validate: {
-      min: 0,
-      max: 100,
-    },
-  },
-
   assignedAt: {
     type: DataTypes.DATE,
     allowNull: false,
