@@ -10,15 +10,18 @@ const UserDetail = sequelize.define("UserDetail", {
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-   
   },
-  birthday: {
-    type: DataTypes.DATE,
+  address: {
+    type: DataTypes.STRING,
     allowNull: true,
   },
-  adress: {
+  phone: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+  },
+  birthDate: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
   },
 });
 

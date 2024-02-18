@@ -7,7 +7,7 @@ import UserDetail from "./models/userDetail.js";
 import Teacher from "./models/teacher.js";
 import Student from "./models/student.js";
 import Class from "./models/class.js";
-import Staff from "./models/staff.js";
+import Mentor from "./models/mentor.js";
 import Assignment from "./models/assignment.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";

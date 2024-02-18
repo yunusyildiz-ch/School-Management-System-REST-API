@@ -8,7 +8,9 @@ const createTeacher = async (userId, expertise, classId) => {
       expertise: expertise,
       classId: classId,
     });
-    ClassService.addTeacherToClass(classId, teacher.id);
+    if (classId) {
+      ClassService.addTeacherToClass(classId, teacher.id);
+    }
   } catch (error) {
     throw error;
   }

@@ -1,7 +1,7 @@
 import sequelize from "../config/db.js";
 import { DataTypes } from "sequelize";
 
-const Staff = sequelize.define("Staff", {
+const Mentor = sequelize.define("Mentor", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,4 +17,4 @@ const Staff = sequelize.define("Staff", {
   },
 });
 
-export default Staff;
+export default Mentor;

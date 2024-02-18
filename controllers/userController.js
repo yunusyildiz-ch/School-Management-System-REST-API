@@ -6,15 +6,8 @@ const createUser = async (req, res) => {
     if (req.user.role !== "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
-    const { name, email, password, role, expertise, classId } = req.body;
-    const newUser = await UserService.createUser({
-      name,
-      email,
-      password,
-      role,
-      expertise,
-      classId,
-    });
+    
+    const newUser = await UserService.createUser(req.body);
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: error.message });

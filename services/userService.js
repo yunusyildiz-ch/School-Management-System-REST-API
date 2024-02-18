@@ -1,20 +1,32 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.js";
+import UserDetails from "../models/userDetail.js";
 import * as AssistantService from "../services/assistantService.js";
-import * as StaffService from "../services/staffService.js";
+import * as MentorService from "../services/mentorService.js";
 import * as StudentService from "../services/studentService.js";
 import * as TeacherService from "../services/teacherService.js";
 
 const createUser = async (userData) => {
+  console.log(userData);
   try {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-    const newUser = await User.create({
-      name: userData.name,
-      email: userData.email,
-      password: hashedPassword,
-      role: userData.role,
-    });
+    const newUser = await User.create(
+      {
+        name: userData.name,
+        email: userData.email,
+        password: hashedPassword,
+        role: userData.role,
+        UserDetail: {
+          address: userData.address,
+          phone: userData.phone,
+          birthDate: userData.birthDate,
+        },
+      },
+      {
+        include: [UserDetails],
+      }
+    );
 
     switch (userData.role) {
       case "student":
@@ -30,8 +42,8 @@ const createUser = async (userData) => {
       case "assistant":
         await AssistantService.createAssistant(newUser.id, userData.expertise);
         break;
-      case "staff":
-        await StaffService.createStaff(newUser.id, userData.expertise);
+      case "mentor":
+        await MentorService.createMentor(newUser.id, userData.expertise);
         break;
       default:
         break;
@@ -77,8 +89,8 @@ const updateUser = async (userId, updatedUserData) => {
       case "assistant":
         await AssistantService.updateAssistant(user.id, updatedUserData);
         break;
-      case "staff":
-        await StaffService.updateStaff(user.id, updatedUserData);
+      case "mentor":
+        await MentorService.updateMentor(user.id, updatedUserData);
         break;
       default:
         break;
