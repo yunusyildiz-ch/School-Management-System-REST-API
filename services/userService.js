@@ -5,7 +5,7 @@ import * as StaffService from "../services/staffService.js";
 import * as StudentService from "../services/studentService.js";
 import * as TeacherService from "../services/teacherService.js";
 
-export const register = async (userData) => {
+const createUser = async (userData) => {
   try {
     const hashedPassword = await bcrypt.hash(userData.password, 10);
 
@@ -42,3 +42,10 @@ export const register = async (userData) => {
     throw error;
   }
 };
+
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
+export { createUser, getAllUsers };
