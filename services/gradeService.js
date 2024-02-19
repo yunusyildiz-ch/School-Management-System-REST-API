@@ -80,4 +80,4 @@ const updateGrade = async (studentId, assignmentId, grade) => {
   return gradeRecord;
 };
 
-export { addGrade, removeGrade, getGrade, getAllGradesOfStudent };
+export { addGrade, removeGrade, getGrade, getAllGradesOfStudent,updateGrade };
