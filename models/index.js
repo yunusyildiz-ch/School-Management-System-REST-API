@@ -15,16 +15,16 @@ import Attendance from './attendance.js';
 User.hasOne(UserDetail, { foreignKey: 'userId', onDelete: 'CASCADE' });
 UserDetail.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(Teacher, { foreignKey: 'userId', onDelete: 'CASCADE' });
+User.hasMany(Teacher, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Teacher.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(Student, { foreignKey: 'userId', onDelete: 'CASCADE' });
+User.hasMany(Student, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Student.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(Mentor, { foreignKey: 'userId', onDelete: 'CASCADE' });
+User.hasMany(Mentor, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Mentor.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(Assistant, { foreignKey: 'userId', onDelete: 'CASCADE' });
+User.hasMany(Assistant, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Assistant.belongsTo(User, { foreignKey: 'userId' });
 
 

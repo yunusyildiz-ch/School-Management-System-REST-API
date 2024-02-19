@@ -26,6 +26,34 @@ export const sendWelcomeEmail = async (email, name) => {
 };
 
 
+export const sendNewAssignmentMail = async (email, name, date, attachmentPath = null,) => {
+  const mailOptions = {
+    from: process.env.APP_EMAIL_ADDRESS,
+    to: email,
+    subject: "New Assignment",
+    html: `<p>Hi <strong>${name}</strong>, A new assignment has been added to your class. Assignment due date: ${date}.</p> 
+    <h3> © School Management System Edu-Board<h3>`,
+  };
+
+  if (attachmentPath) {
+    mailOptions.attachments = [
+      {
+        path: attachmentPath,
+        contentType: 'application/pdf'
+      }
+    ];
+  }
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully");
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};
+
+
+
+
 transporter.verify(function (error, success) {
     if (error) {
       console.log(error);

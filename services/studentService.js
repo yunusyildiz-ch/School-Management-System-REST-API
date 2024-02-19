@@ -6,7 +6,7 @@ const createStudent = async (userId, classId) => {
   try {
     const student = await Student.create({ userId: userId });
     if (classId) {
-      ClassService.addStudentToClass(classId, student.id);
+      await ClassService.addStudentToClass(classId, student.id);
     }
   } catch (error) {
     throw error;

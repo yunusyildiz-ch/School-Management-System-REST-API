@@ -1,8 +1,10 @@
 import Class from "../models/class.js";
+import User from "../models/user.js"
 import Teacher from "../models/teacher.js";
 import Student from "../models/student.js";
 import Assignment from "../models/assignment.js";
 import Grade from "../models/grade.js";
+import {sendNewAssignmentMail} from "../notifications/emailService.js";
 
 const createClass = async (classData) => {
   const newClass = await Class.create({
@@ -159,7 +161,14 @@ const removeStudentFromClass = async (id, studentId) => {
 
 const setAssignmentToClass = async (id, assignmentId) => {
   try {
-    const existingClass = await Class.findByPk(id);
+    const existingClass = await Class.findByPk(id, {
+      include: [
+        {
+          model: Student,
+          include: [{model:User}], 
+        },
+      ],
+    });
     if (!existingClass) {
       throw new Error("Class not found");
     }
@@ -171,15 +180,25 @@ const setAssignmentToClass = async (id, assignmentId) => {
 
     await existingClass.addAssignment(assignment);
 
-    const students = await existingClass.getStudents();
+    const Students = await existingClass.getStudents();
 
     await Promise.all(
-      students.map((student) =>
+      Students.map((student) =>
         Grade.create({
           studentId: student.id,
           assignmentId: assignment.id,
         })
       )
+    );
+
+    await Promise.all(
+      Students.map(async(student) => {
+   const user = await User.findByPk(student.userId);
+        const email = user.email; 
+        const name = user.name; 
+        const date = assignment.dueDate.toISOString().slice(0, 10);
+        sendNewAssignmentMail(email, name, date);
+      })
     );
 
     const updatedClass = await Class.findByPk(id, { include: [Assignment] });
