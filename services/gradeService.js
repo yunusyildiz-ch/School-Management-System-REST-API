@@ -47,20 +47,37 @@ const getGrade = async (studentId, assignmentId) => {
 };
 
 const getAllGradesOfStudent = async (studentId) => {
-    const grades = await Grade.findAll({
-      where: { studentId },
-      include: [{
+  const grades = await Grade.findAll({
+    where: { studentId },
+    include: [
+      {
         model: Assignment,
-        required: true
-      }]
-    });
-  
-    if (!grades) {
-      throw new Error('Grades for the specified student not found');
-    }
-  
-    return grades;
-  };
-  
+        required: true,
+      },
+    ],
+  });
 
-export { addGrade, removeGrade, getGrade,getAllGradesOfStudent };
+  if (!grades) {
+    throw new Error("Grades for the specified student not found");
+  }
+
+  return grades;
+};
+
+const updateGrade = async (studentId, assignmentId, grade) => {
+  const gradeRecord = await Grade.findOne({
+    where: {
+      studentId,
+      assignmentId,
+    },
+  });
+  if (!gradeRecord) {
+    throw new Error("Grade not found");
+  }
+  gradeRecord.grade = grade;
+  gradeRecord.gradeStatus = "Graded";
+  await gradeRecord.save();
+  return gradeRecord;
+};
+
+export { addGrade, removeGrade, getGrade, getAllGradesOfStudent };
