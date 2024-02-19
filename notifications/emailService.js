@@ -29,6 +29,7 @@ export const sendWelcomeEmail = async (email, name) => {
 export const sendNewAssignmentMail = async (
   email,
   name,
+  assignmentTitle,
   date,
   attachmentPath = null
 ) => {
@@ -36,12 +37,11 @@ export const sendNewAssignmentMail = async (
     from: process.env.APP_EMAIL_ADDRESS,
     to: email,
     subject: "New Assignment",
-    html: `<p>Hi <strong>${name}</strong>, A new assignment has been added to your class. Assignment Due date: ${format(
-      date,
-      "dd-MM-yyyy"
-    )}.</p> 
-    <h4> Edu-Board Departmant <h4>
-    <h4> © School Management System <h4>`,
+    html: `<p>Hi <strong>${name}</strong>, A new assignment <strong>"${assignmentTitle}"</strong> has been added to your class.</p> 
+    <p><strong>Assignment Due Date:</strong> ${format(date, "dd-MM-yyyy")}</p>
+
+     <h4>√ Edu-Board Department</h4>
+     <h4>© School Management System</h4>`,
   };
 
   if (attachmentPath) {
@@ -59,6 +59,44 @@ export const sendNewAssignmentMail = async (
     console.error("Error sending email:", error);
   }
 };
+
+
+
+export const sendAssignmentGradeMail = async (
+  email,
+  name,
+  assignmentTitle,
+  date,
+  grade,
+) => {
+  
+  const mailOptions = {
+    from: process.env.APP_EMAIL_ADDRESS,
+    to: email,
+    subject: "Assignment Grade",
+    html: `
+      <p>Hi <strong>${name}</strong>,</p>
+      <p>Your grade for the assignment <strong>"${assignmentTitle}"</strong> has been posted.</p>
+      <p><strong>Grade:</strong> ${grade}</p>
+      <p><strong>Assignment Due Date:</strong> ${format(date, "dd-MM-yyyy")}</p>
+      <p><strong>Graded Date:</strong> ${format(new Date(), "dd-MM-yyyy")}</p>
+      <h4>√ Edu-Board Department</h4>
+      <h4>© School Management System</h4>
+    `,
+  };
+
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Grade notification email sent successfully");
+  } catch (error) {
+    console.error("Error sending grade notification email:", error);
+  }
+};
+
+
+
+
 
 transporter.verify(function (error, success) {
   if (error) {

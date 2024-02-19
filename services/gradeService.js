@@ -1,7 +1,15 @@
 import Grade from "../models/grade.js";
+import User from "../models/user.js";
+import Student from "../models/student.js";
 import Assignment from "../models/assignment.js";
+import { sendAssignmentGradeMail } from "../notifications/emailService.js";
 
 const addGrade = async (studentId, assignmentId, grade) => {
+  const student = await Student.findByPk(studentId)
+  const assignment = await Assignment.findOne({
+    where: { id: assignmentId },
+  });
+  const user = await User.findOne({ where: { id: student.userId } });
   const [gradeRecord, created] = await Grade.findOrCreate({
     where: { studentId, assignmentId },
     defaults: { grade },
@@ -12,7 +20,13 @@ const addGrade = async (studentId, assignmentId, grade) => {
     gradeRecord.gradeStatus = "Graded";
     await gradeRecord.save();
   }
-
+  sendAssignmentGradeMail(
+    user.email,
+    user.name,
+    assignment.title,
+    assignment.dueDate,
+    grade
+  );
   return gradeRecord;
 };
 
@@ -65,6 +79,11 @@ const getAllGradesOfStudent = async (studentId) => {
 };
 
 const updateGrade = async (studentId, assignmentId, grade) => {
+  const student = await Student.findByPk(studentId)
+  const assignment = await Assignment.findOne({
+    where: { id: assignmentId },
+  });
+  const user = await User.findOne({ where: { id: student.userId } });
   const gradeRecord = await Grade.findOne({
     where: {
       studentId,
@@ -77,7 +96,14 @@ const updateGrade = async (studentId, assignmentId, grade) => {
   gradeRecord.grade = grade;
   gradeRecord.gradeStatus = "Graded";
   await gradeRecord.save();
+  sendAssignmentGradeMail(
+    user.email,
+    user.name,
+    assignment.title,
+    assignment.dueDate,
+    grade
+  );
   return gradeRecord;
 };
 
-export { addGrade, removeGrade, getGrade, getAllGradesOfStudent,updateGrade };
+export { addGrade, removeGrade, getGrade, getAllGradesOfStudent, updateGrade };

@@ -159,9 +159,9 @@ const removeStudentFromClass = async (id, studentId) => {
   }
 };
 
-const setAssignmentToClass = async (id, assignmentId) => {
+const setAssignmentToClass = async (classId, assignmentId) => {
   try {
-    const existingClass = await Class.findByPk(id);
+    const existingClass = await Class.findByPk(classId);
     if (!existingClass) {
       throw new Error("Class not found");
     }
@@ -171,31 +171,46 @@ const setAssignmentToClass = async (id, assignmentId) => {
       throw new Error("Assignment not found");
     }
 
-    await existingClass.addAssignment(assignment);
+    const existingAssignment = await existingClass.getAssignments({
+      where: { id: assignmentId },
+    });
 
-    const Students = await existingClass.getStudents();
+    if (existingAssignment.length > 0) {
+      console.log("Assignment already assigned to class.");
+      return existingClass;
+    } else {
+      await existingClass.addAssignment(assignment);
+    }
+
+    const students = await existingClass.getStudents();
 
     await Promise.all(
-      Students.map((student) =>
-        Grade.create({
-          studentId: student.id,
-          assignmentId: assignment.id,
-        })
-      )
-    );
+      students.map(async (student) => {
+        const existingGrade = await Grade.findOne({
+          where: {
+            studentId: student.id,
+            assignmentId: assignment.id,
+          },
+        });
 
-    await Promise.all(
-      Students.map(async (student) => {
-        const user = await User.findByPk(student.userId);
-        const email = user.email;
-        const name = user.name;
-        const date = assignment.dueDate;
-        sendNewAssignmentMail(email, name, date);
+        if (!existingGrade) {
+          await Grade.create({
+            studentId: student.id,
+            assignmentId: assignment.id,
+          });
+
+          const user = await User.findByPk(student.userId);
+          if (user) {
+            const email = user.email;
+            const name = user.name;
+            const date = assignment.dueDate;
+            sendNewAssignmentMail(email, name,assignment.title, date);
+          }
+        }
       })
     );
 
-    const updatedClass = await Class.findByPk(id, { include: [Assignment] });
-    return updatedClass;
+    return await Class.findByPk(classId, { include: [Assignment] });
   } catch (error) {
     throw error;
   }
