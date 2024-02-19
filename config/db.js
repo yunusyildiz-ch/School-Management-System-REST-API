@@ -1,5 +1,5 @@
 import  Sequelize from "sequelize";
-// import { createAdminUser } from "./setup.js";
+
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,

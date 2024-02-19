@@ -7,8 +7,8 @@ import { createAdminUser } from "./config/setup.js";
 const port = process.env.PORT || 3000;
 
 connectDB()
-  .then(() => {
-    createAdminUser()
+  .then(async () => {
+    await createAdminUser()
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
