@@ -28,4 +28,10 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,GradeController.getGrade)
 
+  router.get("/:studentId",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant || isTeacher,GradeController.getAllGradesOfStudent)
+
+  
+
 export default router;

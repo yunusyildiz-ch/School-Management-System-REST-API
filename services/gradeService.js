@@ -1,4 +1,5 @@
 import Grade from "../models/grade.js";
+import Assignment from "../models/assignment.js";
 
 const addGrade = async (studentId, assignmentId, grade) => {
   const [gradeRecord, created] = await Grade.findOrCreate({
@@ -45,4 +46,21 @@ const getGrade = async (studentId, assignmentId) => {
   return grade;
 };
 
-export { addGrade, removeGrade, getGrade };
+const getAllGradesOfStudent = async (studentId) => {
+    const grades = await Grade.findAll({
+      where: { studentId },
+      include: [{
+        model: Assignment,
+        required: true
+      }]
+    });
+  
+    if (!grades) {
+      throw new Error('Grades for the specified student not found');
+    }
+  
+    return grades;
+  };
+  
+
+export { addGrade, removeGrade, getGrade,getAllGradesOfStudent };

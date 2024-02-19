@@ -54,3 +54,15 @@ export const getGrade = asyncHandler(async (req, res) => {
     });
   }
 });
+
+export const getAllGradesOfStudent = asyncHandler(async (req, res) => {
+    const { studentId } = req.params; 
+  
+    try {
+      const grades = await GradeService.getAllGradesOfStudent(studentId);
+      res.status(200).json(grades);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+
