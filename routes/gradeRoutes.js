@@ -23,4 +23,9 @@ router.delete(
   GradeController.removeGrade
 );
 
+router.get(
+  "/:studentId/:assignmentId",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant || isTeacher,GradeController.getGrade)
+
 export default router;

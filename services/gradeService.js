@@ -30,4 +30,19 @@ const removeGrade = async (studentId, assignmentId) => {
   await grade.destroy();
 };
 
-export { addGrade, removeGrade };
+const getGrade = async (studentId, assignmentId) => {
+  const grade = await Grade.findOne({
+    where: {
+      studentId,
+      assignmentId,
+    },
+  });
+
+  if (!grade) {
+    throw new Error("Grade not found");
+  }
+
+  return grade;
+};
+
+export { addGrade, removeGrade, getGrade };
