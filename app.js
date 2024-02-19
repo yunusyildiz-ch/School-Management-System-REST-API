@@ -15,6 +15,7 @@ import classRoutes from "./routes/classRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import assignmentRoutes from "./routes/assignmentRoutes.js";
+import gradeRoutes from "./routes/gradeRoutes.js";
 
 const app = Express();
 
@@ -30,5 +31,6 @@ app.use("/api/class", classRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/assignment", assignmentRoutes);
+app.use("/api/grade", gradeRoutes);
 
 export default app;
