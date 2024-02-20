@@ -13,6 +13,14 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   TeacherController.getAllTeachers
 );
+
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),isAdminOrAssistant || isTeacher,
+  TeacherController.getClassOfTeacher
+);
+
+
 router.get(
   "/:id/class-schedule",
   passport.authenticate("jwt", { session: false }),

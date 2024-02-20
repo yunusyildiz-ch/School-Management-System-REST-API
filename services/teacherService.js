@@ -47,6 +47,21 @@ const updateTeacher = async (userId, updatedData) => {
   }
 };
 
+const getClassOfTeacher = async (id) => {
+  try {
+  const teacher = await Teacher.findByPk(id);
+  if (!teacher) {
+    return { status: 404, message: "Teacher not found" };
+  }
+  const classes = teacher.getClasses();
+
+    return classes;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const getClassScheduleOfTeacher = async (teacherId) => {
   try {
     const teacherWithSchedules = await Teacher.findByPk(teacherId, {
@@ -90,5 +105,6 @@ export {
   createTeacher,
   getAllTeachers,
   updateTeacher,
+  getClassOfTeacher,
   getClassScheduleOfTeacher,
 };
