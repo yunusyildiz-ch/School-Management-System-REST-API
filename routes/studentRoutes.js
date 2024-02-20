@@ -14,4 +14,6 @@ router.get(
   StudentController.getAllStudents
 );
 
+router.get('/:id/class-schedule',passport.authenticate("jwt", { session: false }),StudentController.getClassScheduleOfStudent)
+
 export default router;
