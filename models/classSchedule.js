@@ -4,31 +4,34 @@ import { DataTypes } from "sequelize";
 const ClassSchedule = sequelize.define("ClassSchedule", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   classId: {
-    allowNull:true,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: { model: "Classes", key: "id" },
   },
-  
-  startTime: {
+
+  startDate: {
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
-      notNull: { msg: "Start time is required." }
-    }
+      notNull: { msg: "Start time is required." },
+    },
   },
-  endTime: {
+  endDate: {
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
-      notNull: { msg: "End time is required."  },
+      notNull: { msg: "End time is required." },
       isAfterStart(value) {
         if (new Date(value) <= new Date(this.startTime)) {
-          throw new Error('End time must be after the start time.');
+          throw new Error("End time must be after the start time.");
         }
-      }
-    }
-  }
-
+      },
+    },
+  },
+  daysOfWeek: {
+    type: DataTypes.STRING, 
+    allowNull: false,
+  },
 });
 
 export default ClassSchedule;

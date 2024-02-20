@@ -15,6 +15,6 @@ router.post(
   ClassScheduleController.createClassSchedule
 );
 
-router.post('/:classScheduleId/:classId',passport.authenticate("jwt", { session: false }),isAdminOrAssistant || isTeacher, ClassScheduleController.assignClassScheduleToClass)
+router.post('/:classScheduleId/:classId',passport.authenticate("jwt", { session: false }),isAdminOrAssistant || isTeacher, ClassScheduleController.assignClassScheduleToClassAndCreateAttendance)
 
 export default router;
