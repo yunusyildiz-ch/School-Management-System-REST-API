@@ -1,14 +1,23 @@
 import express from "express";
 import passport from "../config/passport.js";
-import * as teacherController from "../controllers/teacherController.js";
-import { isAdminOrAssistant } from "../middlewares/authMiddleware.js";
+import * as TeacherController from "../controllers/teacherController.js";
+import {
+  isAdminOrAssistant,
+  isTeacher,
+} from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  teacherController.getAllTeachers
+  TeacherController.getAllTeachers
+);
+router.get(
+  "/:id/class-schedule",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistant || isTeacher,
+  TeacherController.getClassScheduleOfTeacher
 );
 
 export default router;
