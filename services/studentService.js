@@ -1,6 +1,6 @@
 import Student from "../models/student.js";
 import User from "../models/user.js";
-import Class from '../models/class.js'
+import Class from "../models/class.js";
 import ClassSchedule from "../models/classSchedule.js";
 import * as ClassService from "../services/classService.js";
 
@@ -31,36 +31,58 @@ const getAllStudents = async () => {
   }
 };
 
+const getClassOfStudent = async (id) => {
+  try {
+  const student = await Student.findByPk(id);
+  if (!student) {
+    return { status: 404, message: "Student not found" };
+  }
+  const classes = student.getClasses();
+
+    return classes;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getClassScheduleOfStudent = async (studentId) => {
   try {
-   
     const studentWithClassesAndSchedules = await Student.findByPk(studentId, {
-      include: [{
-        model: Class, 
-        as: 'Classes', 
-        include: [{
-          model: ClassSchedule, 
-          as: 'ClassSchedules' 
-        }]
-      }]
+      include: [
+        {
+          model: Class,
+          as: "Classes",
+          include: [
+            {
+              model: ClassSchedule,
+              as: "ClassSchedules",
+            },
+          ],
+        },
+      ],
     });
 
     if (!studentWithClassesAndSchedules) {
       return { status: 404, message: "Student not found" };
     }
 
-  
-    const schedules = studentWithClassesAndSchedules.Classes.reduce((acc, cls) => {
-      const clsSchedules = cls.ClassSchedules.map(schedule => ({
-        classId: cls.id,
-        scheduleId: schedule.id,
-        ...schedule.toJSON() 
-      }));
-      return acc.concat(clsSchedules);
-    }, []);
+    const schedules = studentWithClassesAndSchedules.Classes.reduce(
+      (acc, cls) => {
+        const clsSchedules = cls.ClassSchedules.map((schedule) => ({
+          classId: cls.id,
+          scheduleId: schedule.id,
+          ...schedule.toJSON(),
+        }));
+        return acc.concat(clsSchedules);
+      },
+      []
+    );
 
     if (schedules.length === 0) {
-      return { status: 404, message: "No class schedules found for this student" };
+      return {
+        status: 404,
+        message: "No class schedules found for this student",
+      };
     }
 
     return { status: 200, data: schedules };
@@ -70,5 +92,9 @@ const getClassScheduleOfStudent = async (studentId) => {
   }
 };
 
-
-export { createStudent, getAllStudents, getClassScheduleOfStudent };
+export {
+  createStudent,
+  getAllStudents,
+  getClassOfStudent,
+  getClassScheduleOfStudent,
+};
