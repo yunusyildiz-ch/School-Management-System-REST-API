@@ -1,6 +1,6 @@
 import asyncHandler from "express-async-handler";
 import * as StudentService from "../services/studentService.js";
-import {Student} from "../models/index.js";
+import { Student } from "../models/index.js";
 
 const getAllStudents = asyncHandler(async (req, res) => {
   const teachers = await StudentService.getAllStudents();

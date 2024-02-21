@@ -5,7 +5,7 @@ import * as AssistantService from "../services/assistantService.js";
 import * as MentorService from "../services/mentorService.js";
 import * as StudentService from "../services/studentService.js";
 import * as TeacherService from "../services/teacherService.js";
-import {sendWelcomeEmail} from "../notifications/emailService.js";
+import { sendWelcomeEmail } from "../notifications/emailService.js";
 
 const createUser = async (userData) => {
   console.log(userData);
@@ -115,6 +115,5 @@ const deleteUser = async (userId) => {
     throw error;
   }
 };
-
 
 export { createUser, getAllUsers, getUserById, updateUser, deleteUser };

@@ -35,20 +35,17 @@ const getAllTeachers = async () => {
 
 const updateTeacher = async (userId, updatedTeacherData) => {
   try {
-   
     const user = await User.findByPk(userId);
     if (!user) {
       throw new Error("User not found");
     }
 
     if (updatedTeacherData.password) {
-      const hashedPassword = await bcrypt.hash(updatedTeacherData.password,10);
-      updatedTeacherData.password = hashedPassword; 
+      const hashedPassword = await bcrypt.hash(updatedTeacherData.password, 10);
+      updatedTeacherData.password = hashedPassword;
     }
 
-
     const updatedUser = await user.update(updatedTeacherData);
-
 
     const teacher = await Teacher.findOne({ where: { userId: userId } });
     if (!teacher) {

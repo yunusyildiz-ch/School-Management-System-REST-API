@@ -98,7 +98,6 @@ const getClassScheduleOfStudent = async (studentId) => {
 };
 
 const updateStudent = async (userId, updatedData) => {
-
   try {
     const user = await User.findOne({ where: { id: userId } });
     if (!user) {
@@ -106,8 +105,8 @@ const updateStudent = async (userId, updatedData) => {
     }
 
     if (updatedData.password) {
-      const hashedPassword = await bcrypt.hash(updatedData.password,10);
-      updatedData.password = hashedPassword; 
+      const hashedPassword = await bcrypt.hash(updatedData.password, 10);
+      updatedData.password = hashedPassword;
     }
 
     const updatedStudent = await user.update(updatedData);
@@ -117,8 +116,6 @@ const updateStudent = async (userId, updatedData) => {
     throw error;
   }
 };
-
-
 
 const deleteStudent = async (id) => {
   try {

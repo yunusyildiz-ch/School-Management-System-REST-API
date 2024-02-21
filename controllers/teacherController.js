@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import {Teacher} from '../models/index.js'
+import { Teacher } from "../models/index.js";
 import * as TeacherService from "../services/teacherService.js";
 
 const getAllTeachers = asyncHandler(async (req, res) => {
@@ -34,6 +34,12 @@ const deleteTeacher = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const teacher = await TeacherService.deleteTeacher(id);
   res.status(200).json(teacher);
-})
+});
 
-export { getAllTeachers,getClassOfTeacher,getClassScheduleOfTeacher,updateTeacher,deleteTeacher };
+export {
+  getAllTeachers,
+  getClassOfTeacher,
+  getClassScheduleOfTeacher,
+  updateTeacher,
+  deleteTeacher,
+};
