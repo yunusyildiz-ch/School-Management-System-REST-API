@@ -101,10 +101,42 @@ const getClassScheduleOfTeacher = async (teacherId) => {
   }
 };
 
+
+const deleteTeacher = async (id) => {
+  try {
+    const teacher = await Teacher.findByPk(id);
+    if (!teacher) {
+      return { status: 404, message: "Teacher not found" };
+    }
+
+    const user = await User.findByPk(teacher.userId);
+    if (!user) {
+      return { status: 404, message: "Associated user account not found" };
+    }
+
+    await user.destroy();
+
+    return {
+      status: 200,
+      message: "Teacher and associated user account successfully deleted",
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      status: 500,
+      message: "An error occurred while deleting the teacher",
+    };
+  }
+};
+
+
+
 export {
   createTeacher,
   getAllTeachers,
   updateTeacher,
   getClassOfTeacher,
   getClassScheduleOfTeacher,
+  deleteTeacher,
 };

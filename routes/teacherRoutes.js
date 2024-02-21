@@ -28,4 +28,10 @@ router.get(
   TeacherController.getClassScheduleOfTeacher
 );
 
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),isAdminOrAssistant,
+  TeacherController.deleteTeacher
+);
+
 export default router;

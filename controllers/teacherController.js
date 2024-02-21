@@ -18,4 +18,10 @@ const getClassScheduleOfTeacher = asyncHandler(async (req, res) => {
   res.status(200).json(classSchedule);
 });
 
-export { getAllTeachers,getClassOfTeacher,getClassScheduleOfTeacher };
+const deleteTeacher = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const teacher = await TeacherService.deleteTeacher(id);
+  res.status(200).json(teacher);
+})
+
+export { getAllTeachers,getClassOfTeacher,getClassScheduleOfTeacher,deleteTeacher };
