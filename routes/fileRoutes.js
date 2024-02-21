@@ -1,6 +1,6 @@
 import express from "express";
 import { upload } from "../config/multerConfig.js";
-import { uploadFile} from "../controllers/fileController.js";
+import * as FileController from "../controllers/fileController.js";
 import passport from "../config/passport.js";
 import { isAdminOrAssistantOrTeacher } from "../middlewares/authMiddleware.js";
 
@@ -11,11 +11,9 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistantOrTeacher,
   upload.single("file"),
-  uploadFile
+  FileController.uploadFile
 );
 
-
-
-// router.get("/download/:filename", downloadFile);
+router.get("/download/:filename", FileController.downloadFile);
 
 export default router;
