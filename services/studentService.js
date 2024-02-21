@@ -50,6 +50,42 @@ const getClassOfStudent = async (id) => {
   }
 };
 
+const getTeachersOfStudent = async (studentId) => {
+  try {
+    const classesOfStudents = await Class.findAll({
+      include: [
+        {
+          model: Student,
+          where: { id: studentId },
+        },
+      ],
+    });
+
+    if (!classesOfStudents) {
+      return [];
+    }
+
+    let teachersOfStudent = [];
+    for (let cls of classesOfStudents) {
+      const teachers = await cls.getTeachers();
+      teachersOfStudent = teachersOfStudent.concat(teachers);
+    }
+
+    const uniqueTeachers = [
+      ...new Map(
+        teachersOfStudent.map((teacher) => [teacher.id, teacher])
+      ).values(),
+    ];
+
+    return uniqueTeachers;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+
+
 const getClassScheduleOfStudent = async (studentId) => {
   try {
     const studentWithClassesAndSchedules = await Student.findByPk(studentId, {
@@ -157,6 +193,7 @@ export {
   createStudent,
   getAllStudents,
   getClassOfStudent,
+  getTeachersOfStudent,
   getClassScheduleOfStudent,
   updateStudent,
   deleteStudent,

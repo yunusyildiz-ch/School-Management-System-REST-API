@@ -26,6 +26,12 @@ router.get(
   StudentController.getClassScheduleOfStudent
 );
 
+router.get(
+  "/:id/teacher",
+  passport.authenticate("jwt", { session: false }),
+  StudentController.getTeachersOfStudent
+);
+
 router.put(
   "/:id",
   passport.authenticate("jwt", { session: false }),
