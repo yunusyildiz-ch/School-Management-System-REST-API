@@ -1,4 +1,5 @@
-import { User, Teacher ,Class,ClassSchedule} from "../models/index.js";
+import bcrypt from "bcrypt";
+import { User, Teacher, Class, ClassSchedule } from "../models/index.js";
 import * as ClassService from "../services/classService.js";
 
 const createTeacher = async (userId, expertise, classId) => {
@@ -32,16 +33,37 @@ const getAllTeachers = async () => {
   }
 };
 
-const updateTeacher = async (userId, updatedData) => {
+const updateTeacher = async (userId, updatedTeacherData) => {
   try {
+   
+    const user = await User.findByPk(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    if (updatedTeacherData.password) {
+      const hashedPassword = await bcrypt.hash(updatedTeacherData.password,10);
+      updatedTeacherData.password = hashedPassword; 
+    }
+
+
+    const updatedUser = await user.update(updatedTeacherData);
+
+
     const teacher = await Teacher.findOne({ where: { userId: userId } });
     if (!teacher) {
       throw new Error("Teacher not found");
     }
 
-    const updatedTeacher = await teacher.update(updatedData);
+    const { expertise } = updatedTeacherData;
+    const updatedTeacher = await teacher.update({ expertise });
 
-    return updatedTeacher;
+    const result = {
+      user: updatedUser,
+      teacher: updatedTeacher,
+    };
+
+    return result;
   } catch (error) {
     throw error;
   }
@@ -49,11 +71,11 @@ const updateTeacher = async (userId, updatedData) => {
 
 const getClassOfTeacher = async (id) => {
   try {
-  const teacher = await Teacher.findByPk(id);
-  if (!teacher) {
-    return { status: 404, message: "Teacher not found" };
-  }
-  const classes = teacher.getClasses();
+    const teacher = await Teacher.findByPk(id);
+    if (!teacher) {
+      return { status: 404, message: "Teacher not found" };
+    }
+    const classes = teacher.getClasses();
 
     return classes;
   } catch (error) {
@@ -61,18 +83,17 @@ const getClassOfTeacher = async (id) => {
   }
 };
 
-
 const getClassScheduleOfTeacher = async (teacherId) => {
   try {
     const teacherWithSchedules = await Teacher.findByPk(teacherId, {
       include: [
         {
           model: Class,
-          as: 'Classes',
+          as: "Classes",
           include: [
             {
               model: ClassSchedule,
-              as: 'ClassSchedules',
+              as: "ClassSchedules",
             },
           ],
         },
@@ -100,7 +121,6 @@ const getClassScheduleOfTeacher = async (teacherId) => {
     return { status: 500, data: error.message };
   }
 };
-
 
 const deleteTeacher = async (id) => {
   try {
@@ -130,13 +150,11 @@ const deleteTeacher = async (id) => {
   }
 };
 
-
-
 export {
   createTeacher,
   getAllTeachers,
-  updateTeacher,
   getClassOfTeacher,
   getClassScheduleOfTeacher,
+  updateTeacher,
   deleteTeacher,
 };

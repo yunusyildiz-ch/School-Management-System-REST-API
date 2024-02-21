@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import Student from "../models/student.js";
 import {
   User,
@@ -97,10 +98,16 @@ const getClassScheduleOfStudent = async (studentId) => {
 };
 
 const updateStudent = async (userId, updatedData) => {
+
   try {
     const user = await User.findOne({ where: { id: userId } });
     if (!user) {
       throw new Error("Student not found");
+    }
+
+    if (updatedData.password) {
+      const hashedPassword = await bcrypt.hash(updatedData.password,10);
+      updatedData.password = hashedPassword; 
     }
 
     const updatedStudent = await user.update(updatedData);

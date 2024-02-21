@@ -28,6 +28,13 @@ router.get(
   TeacherController.getClassScheduleOfTeacher
 );
 
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),isAdminOrAssistant,
+  TeacherController.updateTeacher
+);
+
+
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),isAdminOrAssistant,
