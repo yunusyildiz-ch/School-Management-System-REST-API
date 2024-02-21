@@ -96,6 +96,23 @@ const getClassScheduleOfStudent = async (studentId) => {
   }
 };
 
+const updateStudent = async (userId, updatedData) => {
+  try {
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new Error("Student not found");
+    }
+
+    const updatedStudent = await user.update(updatedData);
+
+    return updatedStudent;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 const deleteStudent = async (id) => {
   try {
     const student = await Student.findByPk(id);
@@ -137,5 +154,6 @@ export {
   getAllStudents,
   getClassOfStudent,
   getClassScheduleOfStudent,
+  updateStudent,
   deleteStudent,
 };

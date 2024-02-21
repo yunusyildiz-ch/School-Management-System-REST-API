@@ -20,6 +20,14 @@ router.get(
   StudentController.getClassOfStudent
 );
 
+router.get('/:id/class-schedule',passport.authenticate("jwt", { session: false }),StudentController.getClassScheduleOfStudent)
+
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),isAdminOrAssistant,
+  StudentController.updateStudent
+);
+
 router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),isAdminOrAssistant,
@@ -27,6 +35,6 @@ router.delete(
 );
 
 
-router.get('/:id/class-schedule',passport.authenticate("jwt", { session: false }),StudentController.getClassScheduleOfStudent)
+
 
 export default router;
