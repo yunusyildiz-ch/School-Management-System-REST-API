@@ -21,12 +21,15 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^3.9.1",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.9",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "path": "^0.12.7",
     "sequelize": "^6.37.0",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "uuid": "^9.0.1"
   }
 }

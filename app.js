@@ -2,17 +2,19 @@ import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
 import passport from "./config/passport.js";
-import User from "./models/user.js";
-import UserDetail from "./models/userDetail.js";
-import Teacher from "./models/teacher.js";
-import Student from "./models/student.js";
-import Class from "./models/class.js";
-import Mentor from "./models/mentor.js";
-import Assignment from "./models/assignment.js";
-import ClassSchedule from "./models/classSchedule.js";
-import Attendance from "./models/attendance.js";
-import Assistant from "./models/assistant.js";
-import Grade from "./models/grade.js";
+import {
+  User,
+  UserDetail,
+  Teacher,
+  Student,
+  Class,
+  Mentor,
+  Assignment,
+  ClassSchedule,
+  Attendance,
+  Assistant,
+  Grade,
+} from "./models/index.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
@@ -31,7 +33,7 @@ app.use(Morgan("dev"));
 app.use(passport.initialize());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/user",userRoutes)
+app.use("/api/user", userRoutes);
 app.use("/api/class", classRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
