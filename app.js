@@ -48,6 +48,6 @@ app.use("/api/assignment", assignmentRoutes);
 app.use("/api/grade", gradeRoutes);
 app.use("/api/classSchedule", classScheduleRoutes);
 //todo: app.use("/api/attendance", attendanceRoutes);
-app.use("/api",fileRoutes)
+app.use("/api/file",fileRoutes)
 
 export default app;
