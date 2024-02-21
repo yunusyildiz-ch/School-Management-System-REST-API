@@ -1,7 +1,11 @@
 import Student from "../models/student.js";
-import User from "../models/user.js";
-import Class from "../models/class.js";
-import ClassSchedule from "../models/classSchedule.js";
+import {
+  User,
+  Class,
+  Attendance,
+  ClassSchedule,
+  Grade,
+} from "../models/index.js";
 import * as ClassService from "../services/classService.js";
 
 const createStudent = async (userId, classId) => {
@@ -33,11 +37,11 @@ const getAllStudents = async () => {
 
 const getClassOfStudent = async (id) => {
   try {
-  const student = await Student.findByPk(id);
-  if (!student) {
-    return { status: 404, message: "Student not found" };
-  }
-  const classes = student.getClasses();
+    const student = await Student.findByPk(id);
+    if (!student) {
+      return { status: 404, message: "Student not found" };
+    }
+    const classes = student.getClasses();
 
     return classes;
   } catch (error) {
@@ -92,9 +96,46 @@ const getClassScheduleOfStudent = async (studentId) => {
   }
 };
 
+const deleteStudent = async (id) => {
+  try {
+    const student = await Student.findByPk(id);
+    if (!student) {
+      return { status: 404, message: "Student not found" };
+    }
+
+    await Attendance.destroy({
+      where: { studentId: id },
+    });
+
+    await Grade.destroy({
+      where: { studentId: id },
+    });
+
+    const user = await User.findByPk(student.userId);
+    if (!user) {
+      return { status: 404, message: "Associated user account not found" };
+    }
+
+    await user.destroy();
+
+    return {
+      status: 200,
+      message: "Student and associated user account successfully deleted",
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      status: 500,
+      message: "An error occurred while deleting the student",
+    };
+  }
+};
+
 export {
   createStudent,
   getAllStudents,
   getClassOfStudent,
   getClassScheduleOfStudent,
+  deleteStudent,
 };
