@@ -13,6 +13,13 @@ const getClassOfTeacher = asyncHandler(async (req, res) => {
   res.status(200).json(classes);
 });
 
+const getStudentsOfTeacher = asyncHandler(async(req, res) => {
+  const { id } = req.params;
+  const students = await TeacherService.getStudentsOfTeacher(id);
+  res.status(200).json(students);
+});
+
+
 const getClassScheduleOfTeacher = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const classSchedule = await TeacherService.getClassScheduleOfTeacher(id);
@@ -39,6 +46,7 @@ const deleteTeacher = asyncHandler(async (req, res) => {
 export {
   getAllTeachers,
   getClassOfTeacher,
+  getStudentsOfTeacher,
   getClassScheduleOfTeacher,
   updateTeacher,
   deleteTeacher,

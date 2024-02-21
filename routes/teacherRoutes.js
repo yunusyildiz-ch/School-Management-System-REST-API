@@ -20,6 +20,12 @@ router.get(
   TeacherController.getClassOfTeacher
 );
 
+router.get(
+  "/:id/student",
+  passport.authenticate("jwt", { session: false }),isAdminOrAssistant || isTeacher,
+  TeacherController.getStudentsOfTeacher
+);
+
 
 router.get(
   "/:id/class-schedule",

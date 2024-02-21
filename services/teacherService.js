@@ -1,5 +1,11 @@
 import bcrypt from "bcrypt";
-import { User, Teacher, Class, ClassSchedule } from "../models/index.js";
+import {
+  User,
+  Teacher,
+  Class,
+  ClassSchedule,
+  Student,
+} from "../models/index.js";
 import * as ClassService from "../services/classService.js";
 
 const createTeacher = async (userId, expertise, classId) => {
@@ -29,6 +35,40 @@ const getAllTeachers = async () => {
 
     return teachers;
   } catch (error) {
+    throw error;
+  }
+};
+
+const getStudentsOfTeacher = async (teacherId) => {
+  try {
+    const classesOfTeacher = await Class.findAll({
+      include: [
+        {
+          model: Teacher,
+          where: { id: teacherId },
+        },
+      ],
+    });
+
+    if (!classesOfTeacher) {
+      return [];
+    }
+
+    let studentsOfTeacher = [];
+    for (let cls of classesOfTeacher) {
+      const students = await cls.getStudents();
+      studentsOfTeacher = studentsOfTeacher.concat(students);
+    }
+
+    const uniqueStudents = [
+      ...new Map(
+        studentsOfTeacher.map((student) => [student.id, student])
+      ).values(),
+    ];
+
+    return uniqueStudents;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -150,6 +190,7 @@ const deleteTeacher = async (id) => {
 export {
   createTeacher,
   getAllTeachers,
+  getStudentsOfTeacher,
   getClassOfTeacher,
   getClassScheduleOfTeacher,
   updateTeacher,
