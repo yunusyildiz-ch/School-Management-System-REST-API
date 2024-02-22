@@ -28,6 +28,9 @@ Mentor.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Assistant, { foreignKey: 'userId', onDelete: 'CASCADE' });
 Assistant.belongsTo(User, { foreignKey: 'userId' });
 
+Teacher.belongsToMany(ClassSchedule,{ through:'TeacherSchedules', foreignKey: 'TeacherId',});
+ClassSchedule.belongsToMany(Teacher, { through:'TeacherSchedules',foreignKey: 'classScheduleId' });
+
 
 Class.belongsToMany(Teacher, { through: 'ClassTeachers', foreignKey: 'classId' });
 Teacher.belongsToMany(Class, { through: 'ClassTeachers', foreignKey: 'teacherId' });

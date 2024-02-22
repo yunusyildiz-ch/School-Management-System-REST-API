@@ -1,7 +1,13 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import fs from "fs";
-import { Class,Student,User,Assignment} from '../models/index.js'
+import {
+  ClassSchedule,
+  Class,
+  Student,
+  User,
+  Assignment,
+} from "../models/index.js";
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
@@ -28,39 +34,60 @@ function calculateFileHash(filePath) {
   });
 }
 
-
-
-
-
-
 async function findStudentsForAssignment(assignmentId) {
   const assignment = await Assignment.findByPk(assignmentId);
   const classes = await assignment.getClasses({
-    include: [{
-      model: Student,
-      as: 'Students'
-    }]
+    include: [
+      {
+        model: Student,
+        as: "Students",
+      },
+    ],
   });
 
   let allStudents = [];
   for (const cls of classes) {
-    const students = await cls.getStudents(); 
+    const students = await cls.getStudents();
     allStudents = allStudents.concat(students);
   }
 
-  const studentsInfo = await Promise.all(allStudents.map(async student => {
-    const user = await User.findByPk(student.userId);
-    if (!user) {
-      console.log(`User not found for student ID: ${student.userId}`);
-      return null; 
-    }
-    return { email: user.email, name: user.name };
-  }));
+  const studentsInfo = await Promise.all(
+    allStudents.map(async (student) => {
+      const user = await User.findByPk(student.userId);
+      if (!user) {
+        console.log(`User not found for student ID: ${student.userId}`);
+        return null;
+      }
+      return { email: user.email, name: user.name };
+    })
+  );
 
-  return studentsInfo.filter(info => info !== null); 
+  return studentsInfo.filter((info) => info !== null);
 }
 
+async function assignScheduleToClassTeachers(classScheduleId, classId) {
+  const classSchedule = await ClassSchedule.findByPk(classScheduleId);
+  const cls = await Class.findByPk(classId);
 
+  if (!classSchedule) throw new Error("ClassSchedule not found");
+  if (!cls) throw new Error("Class not found");
 
+  const teachers = await cls.getTeachers();
 
-export { generateToken, calculateFileHash,findStudentsForAssignment };
+  await Promise.all(
+    teachers.map((teacher) => {
+      return teacher.addClassSchedule(classSchedule);
+    })
+  );
+
+  return {
+    message: "ClassSchedule assigned to all teachers of the class.",
+  };
+}
+
+export {
+  generateToken,
+  calculateFileHash,
+  findStudentsForAssignment,
+  assignScheduleToClassTeachers,
+};

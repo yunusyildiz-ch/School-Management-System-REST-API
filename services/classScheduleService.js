@@ -1,11 +1,11 @@
-import ClassSchedule from "../models/classSchedule.js";
-import Class from "../models/class.js";
-import Student from "../models/student.js";
-import Attendance from "../models/attendance.js";
+import { ClassSchedule } from "../models/index.js";
+import { assignScheduleToClassTeachers } from "../utils/utils.js";
+
 import { createAttendanceRecordsForSchedule } from "./attendanceService.js";
 
 export const createClassSchedule = async (classScheduleData) => {
   return ClassSchedule.create({
+    title: classScheduleData.title,
     classId: classScheduleData.classId,
     startDate: classScheduleData.startDate,
     endDate: classScheduleData.endDate,
@@ -28,6 +28,7 @@ export const assignClassScheduleToClassAndCreateAttendance = async (
 
   await createAttendanceRecordsForSchedule(classScheduleId, classId);
 
+  await assignScheduleToClassTeachers(classScheduleId, classId);
   return {
     message: "Class schedule assigned and attendance records created.",
   };

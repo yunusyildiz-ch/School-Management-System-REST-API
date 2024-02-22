@@ -3,6 +3,10 @@ import { DataTypes } from "sequelize";
 
 const ClassSchedule = sequelize.define("ClassSchedule", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+title:{
+  type: DataTypes.STRING,
+  allowNull: false,
+},
   classId: {
     allowNull: true,
     type: DataTypes.INTEGER,
