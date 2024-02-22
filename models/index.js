@@ -10,6 +10,7 @@ import Assistant from './assistant.js';
 import Grade from './grade.js';
 import ClassSchedule from './classSchedule.js';
 import Attendance from './attendance.js';
+import File from './file.js';
 
 
 User.hasOne(UserDetail, { foreignKey: 'userId', onDelete: 'CASCADE' });
@@ -49,6 +50,9 @@ Assignment.hasMany(Grade, { foreignKey: 'assignmentId' });
 Class.hasMany(ClassSchedule, { foreignKey: 'classId' });
 ClassSchedule.belongsTo(Class, { foreignKey: 'classId' });
 
+File.belongsToMany(Class, { through: 'ClassFiles' });
+Class.belongsToMany(File, { through: 'ClassFiles' });
+
 
 Attendance.belongsTo(Student, { foreignKey: 'studentId' });
 Attendance.belongsTo(ClassSchedule, { foreignKey: 'classScheduleId' });
@@ -63,6 +67,7 @@ export {
   Teacher,
   Mentor,
   Class,
+  File,
   Assignment,
   Assistant,
   Grade,

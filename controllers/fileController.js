@@ -1,28 +1,44 @@
 import * as FileService from "../services/fileService.js";
 
-const uploadFile = (req, res) => {
-  try {
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "File successfully uploaded",
-        file: req.file,
-      });
-  } catch (error) {
-    console.error("Error", error);
-    res.status(500).send("An error occurred during the file upload process.");
-  }
-};
+const FileController = {
+  uploadFile: async (req, res) => {
+    try {
+      const { originalname, mimetype, size, path } = req.file;
+      const { classIds, isPublic } = req.body;
 
-const downloadFile = (req, res) => {
-  const { filename } = req.params;
-  FileService.downloadFile(filename, res)
-    .then((filePath) => res.download(filePath))
-    .catch((error) => {
+      const file = await FileService.uploadFile({
+        name: originalname,
+        type: mimetype,
+        size,
+        path,
+        isPublic,
+        classIds,
+      });
+
+      res.status(200).json({
+        success: true,
+        message: "File successfully uploaded and assigned",
+        file: {
+          id: file.id,
+          name: file.name,
+          isPublic: file.isPublic,
+        },
+      });
+    } catch (error) {
+      console.error("Error", error);
+      res.status(500).send("An error occurred during the file upload process.");
+    }
+  },
+
+  downloadFile: async (req, res) => {
+    try {
+      const { filename } = req.params;
+      await FileService.downloadFile(filename, res);
+    } catch (error) {
       console.error("Error", error.message);
       res.status(error.status || 500).send(error.message);
-    });
+    }
+  },
 };
 
-export { uploadFile, downloadFile };
+export default FileController;
