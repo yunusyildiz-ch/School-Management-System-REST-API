@@ -13,17 +13,32 @@ const getClassOfTeacher = asyncHandler(async (req, res) => {
   res.status(200).json(classes);
 });
 
-const getStudentsOfTeacher = asyncHandler(async(req, res) => {
+const getStudentsOfTeacher = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const students = await TeacherService.getStudentsOfTeacher(id);
   res.status(200).json(students);
 });
 
-
 const getClassSchedulesOfTeacher = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const classSchedule = await TeacherService.getClassSchedulesOfTeacher(id);
   res.status(200).json(classSchedule);
+});
+
+const removeClassScheduleOfTeacher = asyncHandler(async (req, res, next) => {
+  const { id, classScheduleId } = req.params;
+  const result = await TeacherService.removeClassScheduleOfTeacher(
+    id,
+    classScheduleId
+  );
+
+  if (result.status && result.status !== 200) {
+    return res
+      .status(result.status)
+      .json({ success: false, message: result.message });
+  }
+
+  res.json({ success: true, message: result.message });
 });
 
 const updateTeacher = asyncHandler(async (req, res) => {
@@ -48,6 +63,7 @@ export {
   getClassOfTeacher,
   getStudentsOfTeacher,
   getClassSchedulesOfTeacher,
+  removeClassScheduleOfTeacher,
   updateTeacher,
   deleteTeacher,
 };

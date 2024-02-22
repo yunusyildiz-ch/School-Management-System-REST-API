@@ -36,6 +36,8 @@ router.get(
   TeacherController.getClassSchedulesOfTeacher
 );
 
+router.delete("/:id/class-schedule/:classScheduleId",passport.authenticate("jwt",{ session: false}),isAdminOrAssistantOrTeacher,TeacherController.removeClassScheduleOfTeacher)
+
 router.put(
   "/:id",
   passport.authenticate("jwt", { session: false }),

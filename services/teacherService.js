@@ -134,7 +134,30 @@ const getClassSchedulesOfTeacher = async (id)=>{
     console.error(error);
     return { status: 500, data: error.message };
   }
-}
+};
+
+const removeClassScheduleOfTeacher = async (id, classScheduleId) => {
+  try {
+    const teacher = await Teacher.findByPk(id);
+    if (!teacher) {
+      return { status: 404, message: "Teacher not found" };
+    }
+
+    const classSchedule = await ClassSchedule.findByPk(classScheduleId);
+    if (!classSchedule) {
+      return { status: 404, message: "Class schedule not found" };
+    }
+
+    await teacher.removeClassSchedule(classSchedule);
+
+ 
+    return { message: "Class schedule successfully removed from teacher" };
+  } catch (error) {
+    console.error(error);
+    return { status: 500, message: "An error occurred while removing the class schedule" };
+  }
+};
+
 
 
 const deleteTeacher = async (id) => {
@@ -173,6 +196,7 @@ export {
   getStudentsOfTeacher,
   getClassOfTeacher,
   getClassSchedulesOfTeacher,
+  removeClassScheduleOfTeacher,
   updateTeacher,
   deleteTeacher,
 };
