@@ -4,7 +4,7 @@ import Teacher from "../models/teacher.js";
 import Student from "../models/student.js";
 import Assignment from "../models/assignment.js";
 import Grade from "../models/grade.js";
-import { sendNewAssignmentMail } from "../notifications/emailService.js";
+import { sendNewAssignmentMail } from "../notifications/mailService.js";
 
 const createClass = async (classData) => {
   const newClass = await Class.create({

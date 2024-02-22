@@ -2,7 +2,7 @@ import Grade from "../models/grade.js";
 import User from "../models/user.js";
 import Student from "../models/student.js";
 import Assignment from "../models/assignment.js";
-import { sendAssignmentGradeMail } from "../notifications/emailService.js";
+import { sendAssignmentGradeMail } from "../notifications/mailService.js";
 
 const addGrade = async (studentId, assignmentId, grade) => {
   const student = await Student.findByPk(studentId)

@@ -3,6 +3,7 @@ import cors from "cors";
 import Morgan from "morgan";
 import path from "path";
 import passport from "./config/passport.js";
+import  {setupCronJobs}  from "./jobs/scheduler.js";
 //todo: import { fileURLToPath } from 'url';
 import {
   User,
@@ -38,6 +39,7 @@ app.use(Morgan("dev"));
 app.use(passport.initialize());
 //todo: app.use('/uploads', Express.static(path.join(__dirname,'uploads')));
 
+setupCronJobs();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
