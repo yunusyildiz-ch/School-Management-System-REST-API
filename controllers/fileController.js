@@ -6,7 +6,8 @@ const FileController = {
       const { originalname, mimetype, size, path } = req.file;
       const { classIds, isPublic } = req.body;
 
-      const file = await FileService.uploadFile({
+      
+      const { file, existingFile, message } = await FileService.uploadFile({
         name: originalname,
         type: mimetype,
         size,
@@ -15,15 +16,25 @@ const FileController = {
         classIds,
       });
 
-      res.status(200).json({
-        success: true,
-        message: "File successfully uploaded and assigned",
-        file: {
-          id: file.id,
-          name: file.name,
-          isPublic: file.isPublic,
-        },
-      });
+ 
+      if (existingFile) {
+        return res.status(200).json({
+          success: true,
+          message,
+          fileId: existingFile.id, 
+        });
+      } else {
+        
+        return res.status(200).json({
+          success: true,
+          message,
+          file: {
+            id: file.id,
+            name: file.name,
+            
+          },
+        });
+      }
     } catch (error) {
       console.error("Error", error);
       res.status(500).send("An error occurred during the file upload process.");

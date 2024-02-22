@@ -9,10 +9,17 @@ const uploadsDir = path.join(__dirname, "..", "uploads");
 
 const uploadFile = async ({ name, type, size, path, isPublic, classIds }) => {
   const fileHash = await calculateFileHash(path);
-  let file = await File.findOne({ where: { hash: fileHash } });
+  const existingFile = await File.findOne({ where: { hash: fileHash } });
 
-  if (!file) {
-    file = await File.create({
+  if (existingFile) {
+
+    await fs.unlink(path);
+    console.log('File already exists and was not uploaded again.');
+  
+    //todo: await existingFile.setClasses(classIds); to update classes!
+    return { existingFile, message: 'File already exists and was not uploaded again.' };
+  } else {
+    const file = await File.create({
       name,
       type,
       size,
@@ -20,14 +27,16 @@ const uploadFile = async ({ name, type, size, path, isPublic, classIds }) => {
       isPublic,
       hash: fileHash,
     });
-  }
 
-  if (classIds && classIds.length > 0) {
-    await file.setClasses(classIds);
-  }
+    if (classIds && classIds.length > 0) {
+      await file.setClasses(classIds);
+    }
 
-  return file;
+    return { file, message: 'File successfully uploaded.' };
+  }
 };
+
+  
 
 const downloadFile = async (filename) => {
   const filePath = path.join(uploadsDir, filename);
