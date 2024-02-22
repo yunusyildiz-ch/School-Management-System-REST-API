@@ -1,7 +1,9 @@
-import sequelize from '../config/db.js'
-import { DataTypes } from'sequelize'
+import sequelize from "../config/db.js";
+import { DataTypes } from "sequelize";
 
-const File = sequelize.define('File', {
+const File = sequelize.define(
+  "File",
+  {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -21,9 +23,16 @@ const File = sequelize.define('File', {
     isPublic: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-    }
-  }, {
-    timestamps: true, 
-  });
+    },
+    hash: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export default File;
