@@ -1,7 +1,7 @@
 import { ClassSchedule } from "../models/index.js";
 import { assignScheduleToClassTeachers } from "../utils/utils.js";
 
-import { createAttendanceRecordsForSchedule } from "./attendanceService.js";
+import { createAttendanceRecordsForSchedule,updateAttendancesForUpdatedClassSchedule } from "./attendanceService.js";
 
 export const createClassSchedule = async (classScheduleData) => {
   return ClassSchedule.create({
@@ -33,3 +33,21 @@ export const assignClassScheduleToClassAndCreateAttendance = async (
     message: "Class schedule assigned and attendance records created.",
   };
 };
+
+export const updateClassSchedule = async (
+  classScheduleId,
+  classScheduleData
+) => {
+  try {
+    const classSchedule = await ClassSchedule.findByPk(classScheduleId);
+    const updatedClassSchedule = await classSchedule.update(classScheduleData);
+
+  
+    await updateAttendancesForUpdatedClassSchedule(classScheduleId, new Date());
+
+    return updatedClassSchedule;
+  } catch (error) {
+    console.error(error);
+  }
+};
+

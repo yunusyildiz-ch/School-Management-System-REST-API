@@ -48,7 +48,7 @@ app.use("/api/teacher", teacherRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/assignment", assignmentRoutes);
 app.use("/api/grade", gradeRoutes);
-app.use("/api/classSchedule", classScheduleRoutes);
+app.use("/api/class-schedule", classScheduleRoutes);
 //todo: app.use("/api/attendance", attendanceRoutes);
 app.use("/api/file",fileRoutes)
 

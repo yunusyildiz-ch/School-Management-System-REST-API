@@ -37,4 +37,26 @@ export const assignClassScheduleToClassAndCreateAttendance = async (
   }
 };
 
+export const updateClassSchedule = asyncHandler (async(req, res,next) => {
+  const classScheduleId = req.params.classScheduleId;
+  const classScheduleData = req.body;
+
+  try {
+    const updatedClassSchedule = await ClassScheduleService.updateClassSchedule(
+      classScheduleId,
+      classScheduleData
+    );
+
+    res
+    .status(200)
+    .json({
+        success: true,
+        message: "Class Schedule Successfully Updated.",
+        updatedClassSchedule,
+      });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
