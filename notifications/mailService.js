@@ -95,6 +95,39 @@ export const sendAssignmentGradeMail = async (
 };
 
 
+export const sendAssignmentReminderMail = async (
+  email,
+  name,
+  assignmentTitle,
+  dueDate
+) => {
+ 
+  const mailOptions = {
+    from: process.env.APP_EMAIL_ADDRESS,
+    to: email,
+    subject: "Assignment Due Tomorrow",
+    html: `<p>Hi <strong>${name}</strong>, just a reminder that your assignment <strong>"${assignmentTitle}"</strong> is due tomorrow.</p>
+    <p><strong>Assignment Due Date:</strong> ${format(dueDate, "dd-MM-yyyy")}</p>
+
+    <p>Please make sure to submit it on time.</p>
+
+    <h4>√ Edu-Board Department</h4>
+    <h4>© School Management System</h4>`,
+  };
+
+ 
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Reminder email sent successfully");
+  } catch (error) {
+    console.error("Error sending reminder email:", error);
+  }
+};
+
+
+
+
+
 
 
 
