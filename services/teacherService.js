@@ -120,44 +120,22 @@ const getClassOfTeacher = async (id) => {
   }
 };
 
-const getClassScheduleOfTeacher = async (teacherId) => {
+const getClassSchedulesOfTeacher = async (id)=>{
   try {
-    const teacherWithSchedules = await Teacher.findByPk(teacherId, {
-      include: [
-        {
-          model: Class,
-          as: "Classes",
-          include: [
-            {
-              model: ClassSchedule,
-              as: "ClassSchedules",
-            },
-          ],
-        },
-      ],
-    });
-
-    if (!teacherWithSchedules) {
-      return { status: 404, data: "Teacher not found" };
+    const teacher = await Teacher.findByPk(id);
+    if (!teacher) {
+      return { status: 404, message: "Teacher not found" };
     }
 
-    const teacherSchedules = teacherWithSchedules.Classes.map((cls) => {
-      return {
-        classId: cls.id,
-        className: cls.name,
-        classSchedules: cls.ClassSchedules.map((schedule) => ({
-          scheduleId: schedule.id,
-          ...schedule.toJSON(),
-        })),
-      };
-    });
+    const classSchedules = await teacher.getClassSchedules();
 
-    return { status: 200, data: teacherSchedules };
+    return { status: 200, data: classSchedules };
   } catch (error) {
     console.error(error);
     return { status: 500, data: error.message };
   }
-};
+}
+
 
 const deleteTeacher = async (id) => {
   try {
@@ -187,12 +165,14 @@ const deleteTeacher = async (id) => {
   }
 };
 
+
+
 export {
   createTeacher,
   getAllTeachers,
   getStudentsOfTeacher,
   getClassOfTeacher,
-  getClassScheduleOfTeacher,
+  getClassSchedulesOfTeacher,
   updateTeacher,
   deleteTeacher,
 };
