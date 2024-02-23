@@ -27,6 +27,7 @@ import assignmentRoutes from "./routes/assignmentRoutes.js";
 import gradeRoutes from "./routes/gradeRoutes.js";
 import classScheduleRoutes from "./routes/classScheduleRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 
 const app = Express();
 
@@ -49,6 +50,8 @@ app.use("/api/student", studentRoutes);
 app.use("/api/assignment", assignmentRoutes);
 app.use("/api/grade", gradeRoutes);
 app.use("/api/class-schedule", classScheduleRoutes);
+app.use("/api/report", reportRoutes);
+
 //todo: app.use("/api/attendance", attendanceRoutes);
 app.use("/api/file",fileRoutes)
 

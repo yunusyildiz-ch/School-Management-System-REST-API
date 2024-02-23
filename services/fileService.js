@@ -12,12 +12,14 @@ const uploadFile = async ({ name, type, size, path, isPublic, classIds }) => {
   const existingFile = await File.findOne({ where: { hash: fileHash } });
 
   if (existingFile) {
-
     await fs.unlink(path);
-    console.log('File already exists and was not uploaded again.');
-  
+    console.log("File already exists and was not uploaded again.");
+
     //todo: await existingFile.setClasses(classIds); to update classes!
-    return { existingFile, message: 'File already exists and was not uploaded again.' };
+    return {
+      existingFile,
+      message: "File already exists and was not uploaded again.",
+    };
   } else {
     const file = await File.create({
       name,
@@ -32,18 +34,23 @@ const uploadFile = async ({ name, type, size, path, isPublic, classIds }) => {
       await file.setClasses(classIds);
     }
 
-    return { file, message: 'File successfully uploaded.' };
+    return { file, message: "File successfully uploaded." };
   }
 };
 
-  
-
-const downloadFile = async (filename) => {
+const downloadFile = async (filename, res) => {
   const filePath = path.join(uploadsDir, filename);
 
   try {
     await fs.access(filePath, fs.constants.F_OK);
-    return filePath;
+    res.download(filePath, filename, (err) => {
+      if (err) {
+        console.error("File download error:", err);
+        if (!res.headersSent) {
+          res.status(500).send("Error downloading the file.");
+        }
+      }
+    });
   } catch (err) {
     throw { status: 404, message: "Sorry, file not found." };
   }

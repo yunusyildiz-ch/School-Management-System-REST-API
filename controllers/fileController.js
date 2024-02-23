@@ -6,7 +6,6 @@ const FileController = {
       const { originalname, mimetype, size, path } = req.file;
       const { classIds, isPublic } = req.body;
 
-      
       const { file, existingFile, message } = await FileService.uploadFile({
         name: originalname,
         type: mimetype,
@@ -16,22 +15,19 @@ const FileController = {
         classIds,
       });
 
- 
       if (existingFile) {
         return res.status(200).json({
           success: true,
           message,
-          fileId: existingFile.id, 
+          fileId: existingFile.id,
         });
       } else {
-        
         return res.status(200).json({
           success: true,
           message,
           file: {
             id: file.id,
             name: file.name,
-            
           },
         });
       }
