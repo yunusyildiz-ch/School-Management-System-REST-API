@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import {format} from 'date-fns'
+import { format } from "date-fns";
 import fs from "fs";
 import {
   ClassSchedule,
@@ -86,10 +86,12 @@ async function assignScheduleToClassTeachers(classScheduleId, classId) {
   };
 }
 
-
 const formatDate = (dateString) => {
   const date = new Date(dateString);
-  return format(date, 'dd/MM/yyyy');
+  if (isNaN(date)) {
+    throw new Error("Invalid date string");
+  }
+  return format(date, "dd/MM/yyyy");
 };
 
 export {

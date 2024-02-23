@@ -34,3 +34,30 @@ export const createAttendancePDF = (attendanceData, outputPath) => {
 
   doc.end();
 };
+
+export const createAssignmentGradesPDF = (gradesData, outputPath) => {
+  const doc = new PDFDocument();
+  doc.pipe(fs.createWriteStream(outputPath));
+
+  console.log(gradesData);
+  doc
+    .fontSize(20)
+    .text(`${gradesData[0].title} Grades Report`, { align: "center" });
+  doc.moveDown(2);
+
+  doc.fontSize(14).text("No    Student Name              Grade       Date", {
+    underline: true,
+  });
+  doc.moveDown(0.5);
+
+  gradesData.forEach((grade, index) => {
+    const formattedDate = utils.formatDate(grade.updatedAt);
+    const line = `${index + 1}     ${grade.studentName.padEnd(40)} ${
+      grade.grade
+    }    ${formattedDate}`;
+    doc.fontSize(12).text(line);
+    doc.moveDown(0.25);
+  });
+
+  doc.end();
+};

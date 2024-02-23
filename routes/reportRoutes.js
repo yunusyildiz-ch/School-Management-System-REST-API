@@ -16,4 +16,11 @@ router.get(
   reportController.downloadAttendanceReport
 );
 
+router.get(
+  "/grades-report/assignment/:assignmentId",
+  passport.authenticate("jwt", { session: false }),
+  isAdminOrAssistantOrTeacher,
+  reportController.downloadGradesReportForAssignment
+);
+
 export default router;
