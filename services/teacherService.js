@@ -15,7 +15,9 @@ const createTeacher = async (userId, expertise, classId) => {
       expertise: expertise,
       classId: classId,
     });
-    if (classId) {
+
+    const cls = await Class.findByPk(classId);
+    if (cls) {
       ClassService.addTeacherToClass(classId, teacher.id);
     }
   } catch (error) {
