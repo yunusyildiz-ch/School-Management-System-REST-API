@@ -11,6 +11,7 @@ import {
   createAttendancePDF,
   createAssignmentGradesPDF,
 } from "../views/pdf-templates.js";
+import * as utils from "../utils/utils.js";
 
 export const generateAttendanceReportForClass = async (cls, outputPath) => {
   const attendances = await cls.getClassSchedules({
@@ -43,7 +44,6 @@ export const generateAttendanceReportForClass = async (cls, outputPath) => {
 
   const report = await createAttendancePDF(attendanceData, outputPath);
   return report;
-  
 };
 
 export const generateGradesReportForAssignment = async (
@@ -73,12 +73,13 @@ export const generateGradesReportForAssignment = async (
     return {
       title: assignment.title,
       studentName: grade.Student.User.name,
-      grade: grade.grade,
+      grade: grade.grade ? grade.grade : "N/A",
       className: studentClass ? studentClass.name : "N/A",
       classCode: studentClass ? studentClass.code : "N/A",
       updatedAt: grade.updatedAt,
     };
   });
 
-  createAssignmentGradesPDF(gradesData, outputPath);
+  const report = await createAssignmentGradesPDF(gradesData, outputPath);
+  return report;
 };
