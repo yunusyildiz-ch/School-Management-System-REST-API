@@ -41,7 +41,9 @@ export const generateAttendanceReportForClass = async (cls, outputPath) => {
     })
     .flat();
 
-  createAttendancePDF(attendanceData, outputPath);
+  const report = await createAttendancePDF(attendanceData, outputPath);
+  return report;
+  
 };
 
 export const generateGradesReportForAssignment = async (

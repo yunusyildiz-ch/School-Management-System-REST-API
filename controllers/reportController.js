@@ -12,11 +12,13 @@ const reportController = {
     const cls = await Class.findByPk(classId);
     const outputPath = path.join(
       __dirname,
-      `../outputs/${cls.code + "-" + cls.name}AttendanceReport.pdf`
+      `../outputs/${cls.code+"-"+cls.name}-AttendanceReport.pdf`
     );
 
-    await ReportService.generateAttendanceReportForClass(cls, outputPath);
-    res.download(outputPath);
+     await ReportService.generateAttendanceReportForClass(cls, outputPath);
+     res.download(outputPath);
+     
+    
   },
   downloadGradesReportForAssignment: async (req, res) => {
     const assignmentId = req.params.assignmentId;
@@ -31,6 +33,7 @@ const reportController = {
       outputPath
     );
     res.download(outputPath);
+    
   },
 };
 
