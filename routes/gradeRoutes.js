@@ -9,35 +9,35 @@ import {
 const router = express.Router();
 
 router.post(
-  "/:studentId/:assignmentId",
+  "/student/:studentId/assignment/:assignmentId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   GradeController.addGrade
 );
 
 router.delete(
-  "/:studentId/:assignmentId",
+  "/student/:studentId/assignment/:assignmentId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   GradeController.removeGrade
 );
 
 router.get(
-  "/:studentId/:assignmentId",
+  "/student/:studentId/assignment/:assignmentId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   GradeController.getGrade
 );
 
 router.get(
-  "/:studentId",
+  "/student/:studentId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   GradeController.getAllGradesOfStudent
 );
 
 router.put(
-  "/:studentId/:assignmentId",
+  "/student/:studentId/assignment/:assignmentId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   GradeController.updateGrade
