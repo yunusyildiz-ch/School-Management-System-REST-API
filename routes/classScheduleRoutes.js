@@ -17,7 +17,7 @@ router.post(
 );
 
 router.post(
-  "/:classScheduleId/:classId",
+  "/:classScheduleId/class/:classId",
   passport.authenticate("jwt", { session: false }),
   isAdminOrAssistant || isTeacher,
   ClassScheduleController.assignClassScheduleToClassAndCreateAttendance
