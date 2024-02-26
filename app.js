@@ -2,22 +2,11 @@ import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
 import path from "path";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 import passport from "./config/passport.js";
 import  {setupCronJobs}  from "./jobs/scheduler.js";
 //todo: import { fileURLToPath } from 'url';
-import {
-  User,
-  UserDetail,
-  Teacher,
-  Student,
-  Class,
-  Mentor,
-  Assignment,
-  ClassSchedule,
-  Attendance,
-  Assistant,
-  Grade,
-} from "./models/index.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
@@ -54,5 +43,34 @@ app.use("/api/report", reportRoutes);
 
 //todo: app.use("/api/attendance", attendanceRoutes);
 app.use("/api/file",fileRoutes)
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    
+    info: {
+      title: "School Management System",
+      version: "1.0.0",
+      description: "School Management System ReST API Documentation",
+      contact:{
+        name: "Joseph FOX",
+        email: "josephfox@swissmail.com",
+        url: "https://www.linkedin.com/in/josephfox-ch/",
+        city: "Genève",
+        state: "GE",
+        country: "CH",
+      }
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+}
+const spacs = swaggerJsDoc(options)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
+
 
 export default app;
