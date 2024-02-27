@@ -18,18 +18,18 @@ const generateToken = (user) => {
 
 function calculateFileHash(filePath) {
   return new Promise((resolve, reject) => {
-    const hash = crypto.createHash("sha256");
+    const hash = crypto.createHash('sha256');
     const stream = fs.createReadStream(filePath);
 
-    stream.on("data", (data) => {
-      hash.update(data, "utf8");
+    stream.on('data', (data) => {
+      hash.update(data, 'utf8');
     });
 
-    stream.on("end", () => {
-      resolve(hash.digest("hex"));
+    stream.on('end', () => {
+      resolve(hash.digest('hex'));
     });
 
-    stream.on("error", (err) => {
+    stream.on('error', (err) => {
       reject(err);
     });
   });
