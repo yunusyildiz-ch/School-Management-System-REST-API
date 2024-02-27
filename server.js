@@ -5,14 +5,10 @@ import  './models/index.js'
 import app from "./app.js";
 import { createAdminUser } from "./config/setup.js";
 
-const port = process.env.PORT || 3000;
 
 connectDB()
   .then(async () => {
     await createAdminUser()
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
     
   })
   .catch((error) => {
@@ -20,4 +16,4 @@ connectDB()
     process.exit(1);
   });
 
-  export {app};
+  export default app;
