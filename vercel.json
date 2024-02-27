@@ -2,13 +2,18 @@
   "version": 2,
   "builds": [
     {
+<<<<<<< HEAD
       "src": "app.js",
+=======
+      "src": "server.js",
+>>>>>>> 60f24fc ("fix: readme.md and vercel.json")
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
+<<<<<<< HEAD
       "dest": "app.js"
     }
   ],
@@ -16,4 +21,9 @@
   "build": {
     "env": {}
   }
+=======
+      "dest": "server.js"
+    }
+  ]
+>>>>>>> 60f24fc ("fix: readme.md and vercel.json")
 }

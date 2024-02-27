@@ -519,8 +519,7 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.APP_EMAIL_ADDRESS,
     pass: process.env.APP_EMAIL_PASS,
-  },
-});
+  });
 
   ```
 
