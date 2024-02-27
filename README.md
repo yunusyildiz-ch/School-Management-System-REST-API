@@ -71,6 +71,54 @@ git clone https://github.com/josephfox-ch/School-Management-System-REST-API.git
 
 - School Management System.postman_collection.json
 
+## Vercel Deployment and App Usage
+
+### Vercel Deployment
+
+This School Management System backend application has been deployed to Vercel and is currently live. You can access the deployed application at the following link:
+
+```bash
+
+school-management-system-rest-api.vercel.app
+
+```
+
+### Application Setup
+
+Upon initial setup, the application automatically creates an admin user with the email `admin@admin.com` and password `admin`. This admin user has full access to the system.
+
+### User Authentication
+
+To authenticate as a user and obtain a JWT token, you can make a POST request to the /api/auth/login endpoint with the following credentials:
+
+```bash
+"email": "admin@admin.com"
+"Password": "admin"
+
+```
+
+### Testing with Postman
+
+You can test the API endpoints using Postman. Here's how to authenticate and test other endpoints:
+
+- Login: Make a POST request to /api/auth/login with the provided credentials to obtain a JWT token.
+- Authorization: Copy the JWT token from the login response.
+- Testing Endpoints: Add the JWT token to the Authorization header as a Bearer token. You can now test other endpoints by sending requests with the token attached.
+  
+Example Request:
+
+```bash
+
+POST \
+  https://school-management-system-rest-api.vercel.app/api/auth/login \
+ 
+    "email": "admin@aadmin.com",
+    "password": "admin"
+
+  ```
+
+# Endpoints
+
 # Authentication Routes
 
 This document provides information about the authentication endpoints available.
