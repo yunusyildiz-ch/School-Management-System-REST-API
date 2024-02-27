@@ -47,7 +47,7 @@ git clone https://github.com/josephfox-ch/School-Management-System-REST-API.git
 
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 
 Ensure you have Node.js installed on your machine. Then, navigate to the project directory in your terminal and run the following command to install the dependencies:
 
@@ -57,7 +57,7 @@ Ensure you have Node.js installed on your machine. Then, navigate to the project
 
    ```
 
-4. Configure `.env` file based on `env.example.json` provided.
+3. Configure `.env` file based on `env.example.json` provided.
 
 # Running Locally
 
@@ -75,13 +75,11 @@ npm start
 This command will start the application and establish a connection to the database. However, if you've removed the app.listen function call from the app.js file, you'll need to add it back to ensure the application listens on a port. Here's an example of how you can modify the code:
 
 ```bash
-const app = require('./app');
-const { connectDB, createAdminUser } = require('./setup');
 
 connectDB()
   .then(async () => {
     await createAdminUser();
-    app.listen(process.env.PORT || 3000, () => {
+    app.listen(process.env.EXPRESS_PORT || 3000, () => {
       console.log('Server is running on port 3000');
     });
   })
@@ -92,7 +90,7 @@ connectDB()
 
   ```
 
-1. Access the Application
+2. Access the Application
 Once the application is running locally, you can access it by navigating to http://localhost:3000 in your web browser.
 
 **Note:**
@@ -100,7 +98,7 @@ Make sure you have your database credentials properly configured in the .env fil
 Adjust the port number (3000 in this example) as needed.
 After making these changes, you should be able to run the application locally using the npm start command.
 
-1. Start the server:
+3. Start the server:
 
 ```bash
 
