@@ -1,6 +1,11 @@
 import Express from "express";
 import cors from "cors";
 import Morgan from "morgan";
+import "dotenv/config";
+import  {connectDB} from "./config/db.js";
+//todo : ? import './config/multerConfig.js'
+import  './models/index.js'
+import { createAdminUser } from "./config/setup.js";
 import path from "path";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -71,6 +76,18 @@ const options = {
 }
 const spacs = swaggerJsDoc(options)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
+
+
+
+connectDB()
+  .then(async () => {
+    await createAdminUser()
+    
+  })
+  .catch((error) => {
+    console.error("Database connection error: " + error.message);
+    process.exit(1);
+  });
 
 
 export default app;
