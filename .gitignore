@@ -131,3 +131,4 @@ dist
 
 .bash
 *.bash
+.vercel
