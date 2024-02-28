@@ -59,7 +59,7 @@ Ensure you have Node.js installed on your machine. Then, navigate to the project
 
 3. Configure `.env` file based on `env.example.json` provided.
 
-# Running Locally
+## Running Locally
 
 To run the application locally, you'll need to follow these steps:
 
@@ -158,254 +158,254 @@ POST \
 
 # Endpoints
 
-# Authentication Routes
+## Authentication Routes
 
 This document provides information about the authentication endpoints available.
 
-## Login
+### Login
 
 - **Endpoint:** `POST /api/auth/login`
 - **Description:** Authenticates a user and generates a JWT token for authorization.
 - **Authentication:** Not required.
 - **Request Body:**
-  - `name`: The name of the user.
+  - `email`: The email of the user.
   - `password`: The password of the user.
 - **Response:** Upon successful authentication, returns a JWT token to be used for subsequent requests.
 
 
-# User Routes
+## User Routes
 
 This document provides information about the endpoints available for user management.
 
-## Create a User
+### Create a User
 
 - **Endpoint:** `POST /api/user`
 - **Description:** Creates a new user in the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admin users or assistants can create users.
 
-## Get All Users
+### Get All Users
 
 - **Endpoint:** `GET /api/user`
 - **Description:** Retrieves a list of all users in the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admin users or assistants can view all users.
 
-## Get User by ID
+### Get User by ID
 
 - **Endpoint:** `GET /api/user/:id`
 - **Description:** Retrieves the details of a specific user by their ID.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admin users or assistants can view user details.
 
-## Update User
+### Update User
 
 - **Endpoint:** `PUT /api/user/:id`
 - **Description:** Updates the details of a specific user.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admin users or assistants can update user details.
 
-## Delete User
+### Delete User
 
 - **Endpoint:** `DELETE /api/user/:id`
 - **Description:** Deletes a specific user from the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admin users or assistants can delete users.
 
-# Teacher Routes
+## Teacher Routes
 
 This document provides information about the endpoints available for teacher management.
 
-## Get All Teachers
+### Get All Teachers
 
 - **Endpoint:** `GET /api/teacher`
 - **Description:** Retrieves a list of all teachers in the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Admins, assistants, or teachers can view all teachers.
 
-## Get Teacher by ID
+### Get Teacher by ID
 
 - **Endpoint:** `GET /api/teacher/:id`
 - **Description:** Retrieves the details of a specific teacher by their ID.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Admins, assistants, or the teacher themselves can view teacher details.
 
-## Get Students of Teacher
+### Get Students of Teacher
 
 - **Endpoint:** `GET /api/teacher/:id/student`
 - **Description:** Retrieves the list of students assigned to a specific teacher.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Admins, assistants, or the teacher themselves can view the students.
 
-## Get Class Schedules of Teacher
+### Get Class Schedules of Teacher
 
 - **Endpoint:** `GET /api/teacher/:id/class-schedule`
 - **Description:** Retrieves the class schedules of a specific teacher.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Admins, assistants, or teachers can view the class schedules.
 
-## Remove Class Schedule of Teacher
+### Remove Class Schedule of Teacher
 
 - **Endpoint:** `DELETE /api/teacher/:id/class-schedule/:classScheduleId`
 - **Description:** Removes a class schedule assigned to a specific teacher.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Admins, assistants, or teachers can remove class schedules.
 
-## Update Teacher
+### Update Teacher
 
 - **Endpoint:** `PUT /api/teacher/:id`
 - **Description:** Updates the details of a specific teacher.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admins or assistants can update teacher details.
 
-## Delete Teacher
+### Delete Teacher
 
 - **Endpoint:** `DELETE /api/teacher/:id`
 - **Description:** Deletes a specific teacher from the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only admins or assistants can delete teachers.
 
-# Student Routes
+## Student Routes
 
 This document provides information about the endpoints available for student management.
 
-## Get All Students
+### Get All Students
 
 - **Endpoint:** `GET /api/student`
 - **Description:** Retrieves a list of all students in the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can view all students.
 
-## Get Student by ID
+### Get Student by ID
 
 - **Endpoint:** `GET /api/student/:id`
 - **Description:** Retrieves the details of a specific student by their ID.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can view student details.
 
-## Get Student's Class Schedule
+### Get Student's Class Schedule
 
 - **Endpoint:** `GET /api/student/:id/class-schedule`
 - **Description:** Retrieves the class schedule of a specific student.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can view student class schedules.
 
-## Get Student's Teachers
+### Get Student's Teachers
 
 - **Endpoint:** `GET /api/student/:id/teacher`
 - **Description:** Retrieves the teachers of a specific student.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can view student teachers.
 
-## Update Student
+### Update Student
 
 - **Endpoint:** `PUT /api/student/:id`
 - **Description:** Updates the details of a specific student.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can update student details.
 
-## Delete Student
+### Delete Student
 
 - **Endpoint:** `DELETE /api/student/:id`
 - **Description:** Deletes a specific student from the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can delete students.
 
-# Class Routes
+## Class Routes
 
 This document provides information about the endpoints available for class management.
 
-## Create Class
+### Create Class
 
 - **Endpoint:** `POST /api/class`
 - **Description:** Creates a new class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can create classes.
 
-## Get All Classes
+### Get All Classes
 
 - **Endpoint:** `GET /api/class`
 - **Description:** Retrieves a list of all classes in the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 
-## Get Class by ID
+### Get Class by ID
 
 - **Endpoint:** `GET /api/class/:id`
 - **Description:** Retrieves the details of a specific class by its ID.
 - **Authentication:** Requires authentication with a valid JWT token.
 
-## Update Class
+### Update Class
 
 - **Endpoint:** `PUT /api/class/:id`
 - **Description:** Updates the details of a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can update classes.
 
-## Delete Class
+### Delete Class
 
 - **Endpoint:** `DELETE /api/class/:id`
 - **Description:** Deletes a specific class from the system.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can delete classes.
 
-## Add Teacher to Class
+### Add Teacher to Class
 
 - **Endpoint:** `POST /api/class/:id/teacher/:teacherId`
 - **Description:** Adds a teacher to a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can add teachers to classes.
 
-## Add Student to Class
+### Add Student to Class
 
 - **Endpoint:** `POST /api/class/:id/student/:studentId`
 - **Description:** Adds a student to a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can add students to classes.
 
-## Get Teachers of Class
+### Get Teachers of Class
 
 - **Endpoint:** `GET /api/class/:id/teacher`
 - **Description:** Retrieves the teachers assigned to a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 
-## Get Students of Class
+### Get Students of Class
 
 - **Endpoint:** `GET /api/class/:id/student`
 - **Description:** Retrieves the students enrolled in a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 
-## Remove Teacher from Class
+### Remove Teacher from Class
 
 - **Endpoint:** `DELETE /api/class/:id/teacher/:teacherId`
 - **Description:** Removes a teacher from a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can remove teachers from classes.
 
-## Remove Student from Class
+### Remove Student from Class
 
 - **Endpoint:** `DELETE /api/class/:id/student/:studentId`
 - **Description:** Removes a student from a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators or assistants can remove students from classes.
 
-## Set Assignment to Class
+### Set Assignment to Class
 
 - **Endpoint:** `POST /api/class/:id/assignment/:assignmentId`
 - **Description:** Assigns an assignment to a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 - **Authorization:** Only administrators, assistants, or teachers can set assignments to classes.
 
-## Get Assignments of Class
+### Get Assignments of Class
 
 - **Endpoint:** `GET /api/class/:id/assignment`
 - **Description:** Retrieves the assignments assigned to a specific class.
 - **Authentication:** Requires authentication with a valid JWT token.
 
-# Class Schedule Routes
+## Class Schedule Routes
 
 This document provides information about the class schedule endpoints available.
 
-## Create Class Schedule
+### Create Class Schedule
 
 - **Endpoint:** `POST /api/class-schedule`
 - **Description:** Creates a new class schedule.
@@ -414,7 +414,7 @@ This document provides information about the class schedule endpoints available.
   - `scheduleData`: JSON object containing schedule details.
 - **Response:** Returns the created class schedule.
 
-## Assign Class Schedule to Class and Create Attendance
+### Assign Class Schedule to Class and Create Attendance
 
 - **Endpoint:** `POST /api/class-schedule/:classScheduleId/class/:classId`
 - **Description:** Assigns a class schedule to a class and creates attendance records for the class.
@@ -424,7 +424,7 @@ This document provides information about the class schedule endpoints available.
   - `classId`: The ID of the class to which the schedule is assigned.
 - **Response:** Returns the updated class schedule and attendance records.
 
-## Update Class Schedule
+### Update Class Schedule
 
 - **Endpoint:** `PUT /api/class-schedule/:classScheduleId`
 - **Description:** Updates an existing class schedule.
@@ -435,18 +435,18 @@ This document provides information about the class schedule endpoints available.
   - `scheduleData`: JSON object containing updated schedule details.
 - **Response:** Returns the updated class schedule.
 
-# Assignment Routes
+## Assignment Routes
 
 This document provides information about the assignment endpoints available.
 
-## Get All Assignments
+### Get All Assignments
 
 - **Endpoint:** `GET /api/assignment`
 - **Description:** Retrieves all assignments.
 - **Authentication:** Requires a valid JWT token with admin or assistant role.
 - **Response:** Returns a list of all assignments.
 
-## Create Assignment
+### Create Assignment
 
 - **Endpoint:** `POST /api/assignment`
 - **Description:** Creates a new assignment.
@@ -455,7 +455,7 @@ This document provides information about the assignment endpoints available.
   - `assignmentData`: JSON object containing assignment details.
 - **Response:** Returns the created assignment.
 
-## Get Assignment by ID
+### Get Assignment by ID
 
 - **Endpoint:** `GET /api/assignment/:id`
 - **Description:** Retrieves an assignment by its ID.
@@ -464,7 +464,7 @@ This document provides information about the assignment endpoints available.
   - `id`: The ID of the assignment to retrieve.
 - **Response:** Returns the assignment with the specified ID.
 
-## Update Assignment
+### Update Assignment
 
 - **Endpoint:** `PUT /api/assignment/:id`
 - **Description:** Updates an existing assignment.
@@ -475,7 +475,7 @@ This document provides information about the assignment endpoints available.
   - `assignmentData`: JSON object containing updated assignment details.
 - **Response:** Returns the updated assignment.
 
-## Delete Assignment
+### Delete Assignment
 
 - **Endpoint:** `DELETE /api/assignment/:id`
 - **Description:** Deletes an assignment.
@@ -484,11 +484,11 @@ This document provides information about the assignment endpoints available.
   - `id`: The ID of the assignment to delete.
 - **Response:** Returns a success message upon successful deletion.
 
-# Grade Routes
+## Grade Routes
 
 This document provides information about the grade endpoints available.
 
-## Add Grade
+### Add Grade
 
 - **Endpoint:** `POST /api/grade/student/:studentId/assignment/:assignmentId`
 - **Description:** Adds a grade for a student's assignment.
@@ -500,7 +500,7 @@ This document provides information about the grade endpoints available.
   - `gradeData`: JSON object containing grade details.
 - **Response:** Returns the added grade.
 
-## Remove Grade
+### Remove Grade
 
 - **Endpoint:** `DELETE /api/grade/student/:studentId/assignment/:assignmentId`
 - **Description:** Removes a grade for a student's assignment.
@@ -510,7 +510,7 @@ This document provides information about the grade endpoints available.
   - `assignmentId`: The ID of the assignment.
 - **Response:** Returns a success message upon successful removal.
 
-## Get Grade
+### Get Grade
 
 - **Endpoint:** `GET /api/grade/student/:studentId/assignment/:assignmentId`
 - **Description:** Retrieves the grade for a student's assignment.
@@ -520,7 +520,7 @@ This document provides information about the grade endpoints available.
   - `assignmentId`: The ID of the assignment.
 - **Response:** Returns the grade of the specified assignment for the student.
 
-## Get All Grades of Student
+### Get All Grades of Student
 
 - **Endpoint:** `GET /api/grade/student/:studentId`
 - **Description:** Retrieves all grades of a student.
@@ -529,7 +529,7 @@ This document provides information about the grade endpoints available.
   - `studentId`: The ID of the student.
 - **Response:** Returns a list of all grades of the student.
 
-## Update Grade
+### Update Grade
 
 - **Endpoint:** `PUT /api/grade/student/:studentId/assignment/:assignmentId`
 - **Description:** Updates the grade for a student's assignment.
@@ -541,11 +541,11 @@ This document provides information about the grade endpoints available.
   - `gradeData`: JSON object containing updated grade details.
 - **Response:** Returns the updated grade.
 
-# Report Routes
+## Report Routes
 
 This document provides information about the report endpoints available.
 
-## Download Attendance Report
+### Download Attendance Report
 
 - **Endpoint:** `GET /api/report/attendance-report/:classId`
 - **Description:** Downloads an attendance report for a specific class.
@@ -554,7 +554,7 @@ This document provides information about the report endpoints available.
   - `classId`: The ID of the class.
 - **Response:** Initiates a download of the attendance report file.
 
-## Download Grades Report for Assignment
+### Download Grades Report for Assignment
 
 - **Endpoint:** `GET /api/report/grades-report/assignment/:assignmentId`
 - **Description:** Downloads a grades report for a specific assignment.
@@ -563,11 +563,11 @@ This document provides information about the report endpoints available.
   - `assignmentId`: The ID of the assignment.
 - **Response:** Initiates a download of the grades report file.
 
-# File Routes
+## File Routes
 
 This document provides information about the file upload and download endpoints available.
 
-## Upload File
+### Upload File
 
 - **Endpoint:** `POST /api/file/upload`
 - **Description:** Uploads a file to the server.
@@ -576,15 +576,16 @@ This document provides information about the file upload and download endpoints 
   - `file`: The file to be uploaded.
 - **Response:** Returns a message indicating successful file upload.
 
-## Download File
+### Download File
 
 - **Endpoint:** `GET /api/file/download/:filename`
 - **Description:** Downloads a file from the server.
 - **Request Parameters:**
   - `filename`: The name of the file to be downloaded.
 - **Response:** Initiates a download of the specified file.
+  
 
-## School Management System REST API - Email Notification Services
+# School Management System REST API - Email Notification Services
 
 ## Overview
 
@@ -669,6 +670,6 @@ transporter.verify(function (error, success) {
 
 The transporter's verify method is called to check if the email server is ready to take messages. This ensures that the email configuration is correct and the server is operational.
 
-## Conclusion
+# Conclusion
 
 These functions provide essential email notification capabilities within the School Management System REST API. They enhance user experience by keeping students and teachers informed about important events and deadlines.
