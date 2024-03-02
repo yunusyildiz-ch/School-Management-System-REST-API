@@ -7,11 +7,13 @@ import  {connectDB} from "./config/db.js";
 import  './models/index.js'
 import { createAdminUser } from "./config/setup.js";
 import path from "path";
+import fs from "fs";
+import yaml from "yaml-js";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import passport from "./config/passport.js";
 import  {setupAssignmentsCronJobs,setupScheduleCronJobs}  from "./jobs/scheduler.js";
-//todo: import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url';
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import classRoutes from "./routes/classRoutes.js";
@@ -25,13 +27,16 @@ import reportRoutes from "./routes/reportRoutes.js";
 
 const app = Express();
 
-//todo: const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const openApiYamlPath = path.join(__dirname, "./SchoolManSystemOpenAPI.yaml")
+const openapiObject = yaml.load(fs.readFileSync(openApiYamlPath, "utf8"));
 
 app.use(cors());
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
 app.use(passport.initialize());
+
 //todo: app.use('/uploads', Express.static(path.join(__dirname,'uploads')));
 
 setupAssignmentsCronJobs();
@@ -51,30 +56,12 @@ app.use("/api/report", reportRoutes);
 app.use("/api/file",fileRoutes)
 
 const options = {
-  definition: {
-    openapi: "3.0.0",
-    
-    info: {
-      title: "School Management System",
-      version: "1.0.0",
-      description: "School Management System ReST API Documentation",
-      contact:{
-        name: "Joseph FOX",
-        email: "josephfox@swissmail.com",
-        url: "https://www.linkedin.com/in/josephfox-ch/",
-        city: "Genève",
-        state: "GE",
-        country: "CH",
-      }
-    },
-    servers: [
-      {
-        url: "http://localhost:3000/",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
+  swaggerDefinition:openapiObject,
+  apis:['./routes/*.js']
 }
+
+
+
 const spacs = swaggerJsDoc(options)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 
@@ -82,7 +69,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
 
 connectDB()
   .then(async () => {
-    await createAdminUser()
+    await createAdminUser().then(async () =>{
+      app.listen(process.env.EXPRESS_PORT)
+    })
     
   })
   .catch((error) => {
