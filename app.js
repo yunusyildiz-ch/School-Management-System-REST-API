@@ -10,7 +10,7 @@ import path from "path";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import passport from "./config/passport.js";
-import  {setupCronJobs}  from "./jobs/scheduler.js";
+import  {setupAssignmentsCronJobs,setupScheduleCronJobs}  from "./jobs/scheduler.js";
 //todo: import { fileURLToPath } from 'url';
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -34,7 +34,8 @@ app.use(Morgan("dev"));
 app.use(passport.initialize());
 //todo: app.use('/uploads', Express.static(path.join(__dirname,'uploads')));
 
-setupCronJobs();
+setupAssignmentsCronJobs();
+setupScheduleCronJobs();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);

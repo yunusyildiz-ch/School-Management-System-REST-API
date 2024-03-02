@@ -57,16 +57,18 @@ Student.belongsToMany(Class, {
 Assignment.belongsToMany(Class, {
   through: "AssignmentClasses",
   foreignKey: "assignmentId",
+  onDelete: 'CASCADE'
 });
 Class.belongsToMany(Assignment, {
   through: "AssignmentClasses",
   foreignKey: "classId",
+  onDelete: 'CASCADE'
 });
 
-Grade.belongsTo(Student, { foreignKey: "studentId" });
-Grade.belongsTo(Assignment, { foreignKey: "assignmentId" });
-Student.hasMany(Grade, { foreignKey: "studentId" });
-Assignment.hasMany(Grade, { foreignKey: "assignmentId" });
+Grade.belongsTo(Student, { foreignKey: "studentId",onDelete: 'CASCADE' });
+Grade.belongsTo(Assignment, { foreignKey: "assignmentId",onDelete: 'CASCADE' });
+Student.hasMany(Grade, { foreignKey: "studentId",onDelete: 'CASCADE' });
+Assignment.hasMany(Grade, { foreignKey: "assignmentId",onDelete: 'CASCADE' });
 
 Class.hasMany(ClassSchedule, { foreignKey: "classId" });
 ClassSchedule.belongsTo(Class, { foreignKey: "classId" });
