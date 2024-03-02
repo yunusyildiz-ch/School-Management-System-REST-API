@@ -1,4 +1,3 @@
-
 # School Management System REST API
 
 ## Overview
@@ -33,6 +32,8 @@ This RESTful API project is designed for managing a school's core functions, inc
 
 ## Setup and Deployment
 
+This project aims to provide a comprehensive RESTful API for managing a school, including students, teachers, classes, assignments, grades, and more. Below, you'll find detailed instructions on how to set up and utilize the application both locally and on Vercel, along with instructions for connecting to a local MySQL database using Docker.
+
 ### Prerequisites
 
 - Node.js and npm installed.
@@ -51,11 +52,11 @@ git clone https://github.com/josephfox-ch/School-Management-System-REST-API.git
 
 Ensure you have Node.js installed on your machine. Then, navigate to the project directory in your terminal and run the following command to install the dependencies:
 
-   ```bash
+```bash
 
-   npm install
+npm install
 
-   ```
+```
 
 3. Configure `.env` file based on `env.example.json` provided.
 
@@ -63,54 +64,95 @@ Ensure you have Node.js installed on your machine. Then, navigate to the project
 
 To run the application locally, you'll need to follow these steps:
 
-1. Start the Application
-After installing the dependencies, start the application by running the following command:
+1. Set Up Database with Docker Compose:
+   If you want to connect the application to a local MySQL database, you can use Docker Compose to set it up easily. First, ensure you have Docker installed on your machine. Then, create a `docker-compose.yaml` file with the following content:
 
 ```bash
+version: "3.9"
+services:
+  mysql-school:
+    container_name: mysql-school
+    image: mysql
+    platform: linux/arm64/v8
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=school_01
+      - MYSQL_PASSWORD=school_01
+      - MYSQL_USER=admin
+      - MYSQL_DATABASE=School
+    volumes:
+      - ./mysqlDB:/var/lib/meinsql/data
+  phpmyadmin-school:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-school
+    depends_on:
+      - mysql-school
+    environment:
+      PMA_HOST: mysql-school
+    restart: always
+    platform: linux/arm64/v8
+    ports:
+      - 8080:80
 
+
+```
+
+This Docker Compose configuration sets up a MySQL container and a phpMyAdmin container for managing the database.
+
+2. Start the Database Containers:
+
+Run the following command in the directory where the `docker-compose.yaml` file is located:
+
+```bash
+docker-compose up -d
+```
+
+This command will start the MySQL and phpMyAdmin containers in detached mode, allowing them to run in the background.
+
+3. Start the Aplication:
+
+After setting up the database, start the application by running the following command:
+
+```bash
 npm start
 
 ```
 
 This command will start the application and establish a connection to the database. However, if you've removed the app.listen function call from the app.js file, you'll need to add it back to ensure the application listens on a port. Here's an example of how you can modify the code:
 
-```bash
-
+```javascript
 connectDB()
   .then(async () => {
     await createAdminUser();
     app.listen(process.env.EXPRESS_PORT || 3000, () => {
-      console.log('Server is running on port 3000');
+      console.log("Server is running on port 3000");
     });
   })
   .catch((error) => {
     console.error("Database connection error: " + error.message);
     process.exit(1);
   });
+```
 
-  ```
+4. Access the Application
+   Once the application is running locally, you can access it by navigating to [Localhost](http://localhost:3000) in your web browser.
 
-2. Access the Application
-Once the application is running locally, you can access it by navigating to http://localhost:3000 in your web browser.
+**Notes:**
 
-**Note:**
-Make sure you have your database credentials properly configured in the .env file.
-Adjust the port number (3000 in this example) as needed.
-After making these changes, you should be able to run the application locally using the npm start command.
+- Make sure you have your database credentials properly configured in the .env file.
+- Ensure that the MySQL service is running on port 3306, and phpMyAdmin is accessible on port 8080 as configured in the `docker-compose.yaml` file.
 
-3. Start the server:
-
-```bash
-
-   npm start
-
-   ```
+After making these changes, you should be able to run the application locally with a local MySQL database using Docker Compose using the npm start command.
 
 ## API Documentation
 
 - School Management System.postman_collection.json
 
 ## Vercel Deployment and App Usage
+
+Since the application is deployed on _Vercel_, the app.js file does not include the app.listen command to start the server. Additionally, it utilizes the MySQL service provided by _Avien_ under the database name _x-Drive_. This database has been migrated to the _DigitalOcean server_ located in the _United States, New York (NYC)_ to ensure seamless connectivity with Vercel servers.
 
 ### Vercel Deployment
 
@@ -143,18 +185,18 @@ You can test the API endpoints using Postman. Here's how to authenticate and tes
 - Login: Make a POST request to /api/auth/login with the provided credentials to obtain a JWT token.
 - Authorization: Copy the JWT token from the login response.
 - Testing Endpoints: Add the JWT token to the Authorization header as a Bearer token. You can now test other endpoints by sending requests with the token attached.
-  
+
 Example Request:
 
 ```bash
 
 POST \
   https://school-management-system-rest-api.vercel.app/api/auth/login \
- 
+
     "email": "admin@aadmin.com",
     "password": "admin"
 
-  ```
+```
 
 # Endpoints
 
@@ -171,7 +213,6 @@ This document provides information about the authentication endpoints available.
   - `email`: The email of the user.
   - `password`: The password of the user.
 - **Response:** Upon successful authentication, returns a JWT token to be used for subsequent requests.
-
 
 ## User Routes
 
@@ -583,7 +624,6 @@ This document provides information about the file upload and download endpoints 
 - **Request Parameters:**
   - `filename`: The name of the file to be downloaded.
 - **Response:** Initiates a download of the specified file.
-  
 
 # School Management System REST API - Email Notification Services
 
@@ -593,13 +633,13 @@ The provided code snippets demonstrate the implementation of email notification 
 
 ## Setting Up Nodemailer
 
-```import nodemailer from "nodemailer";```
+`import nodemailer from "nodemailer";`
 
 Nodemailer is imported to facilitate sending emails within the application.
 
 Configuration
 
-```bash
+```javascript
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
@@ -609,24 +649,30 @@ const transporter = nodemailer.createTransport({
     pass: process.env.APP_EMAIL_PASS,
   });
 
-  ```
+```
 
 A transporter is created using SMTP transport. Gmail's SMTP server is used for sending emails. The email address and password are obtained from environment variables for authentication.
 
 ## Welcome Email
 
-```bash
+```javascript
 export const sendWelcomeEmail = async (email, name) => {
   // Mail options
-}; 
+};
 ```
 
 The sendWelcomeEmail function sends a welcome email to newly signed-up users. It includes a personalized greeting message.
 
 ## New Assignment Notification
 
-```bash
-export const sendNewAssignmentMail = async (email, name, assignmentTitle, date, attachmentPath = null) => {
+```javascript
+export const sendNewAssignmentMail = async (
+  email,
+  name,
+  assignmentTitle,
+  date,
+  attachmentPath = null
+) => {
   // Mail options
 };
 ```
@@ -635,29 +681,53 @@ The sendNewAssignmentMail function sends a notification email to students when a
 
 ## Assignment Grade Notification
 
-```bash
-export const sendAssignmentGradeMail = async (email, name, assignmentTitle, date, grade) => {
+```javascript
+export const sendAssignmentGradeMail = async (
+  email,
+  name,
+  assignmentTitle,
+  date,
+  grade
+) => {
   // Mail options
 };
-
 ```
 
 The sendAssignmentGradeMail function notifies students of their assignment grades. It includes details such as the assignment title, grade, due date, and graded date.
 
 ## Assignment Reminder
 
-```bash
-export const sendAssignmentReminderMail = async (email, name, assignmentTitle, dueDate) => {
+```javascript
+export const sendAssignmentReminderMail = async (
+  email,
+  name,
+  assignmentTitle,
+  dueDate
+) => {
   // Mail options
 };
-
 ```
 
 The sendAssignmentReminderMail function sends a reminder email to students about upcoming assignment deadlines. It includes details such as the assignment title and due date.
 
+## Class Schedule Reminder
+
+```javascript
+export const sendScheduleReminderEmail = async (
+  email,
+  name,
+  scheduleTitle,
+  startDate
+) => {
+  // Mail options
+};
+```
+
+The sendScheduleReminderMail function sends a reminder email to students and teachers about upcoming class schedules. it includes details such as schedule start date and time.
+
 ## Email Verification
 
-```bash
+```javascript
 transporter.verify(function (error, success) {
   if (error) {
     console.log(error);
@@ -665,7 +735,6 @@ transporter.verify(function (error, success) {
     console.log("Server is ready to take our messages");
   }
 });
-
 ```
 
 The transporter's verify method is called to check if the email server is ready to take messages. This ensures that the email configuration is correct and the server is operational.
