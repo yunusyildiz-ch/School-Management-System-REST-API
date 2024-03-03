@@ -78,19 +78,16 @@ info:
 
     ## 💡Related templates
 
-
-    [API testing
-    basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  
-
-    [API
-    documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  
-
-    [Authorization
-    methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)
   version: 1.0.0
-  contact: {}
+  contact: {
+        name: "Joseph FOX",
+        email: "josephfox@swissmail.com",
+        url: "https://www.linkedin.com/in/josephfox-ch/",
+    
+      }
 servers:
-  - url: http://localhost
+  - url: https://school-management-system-rest-api.vercel.app/
+
 paths:
   /api/auth/login:
     post:

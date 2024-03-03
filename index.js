@@ -37,11 +37,12 @@ app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
 app.use(passport.initialize());
 
-//todo: app.use('/uploads', Express.static(path.join(__dirname,'uploads')));
+app.use(Express.static(path.join(__dirname,'public')));
 
 setupAssignmentsCronJobs();
 setupScheduleCronJobs();
 
+app.get('/', (req, res) => { res.sendFile(path.join(__dirname, './public', 'welcome.html'))});
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/class", classRoutes);
@@ -61,9 +62,9 @@ const options = {
 }
 
 
-
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 const spacs = swaggerJsDoc(options)
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(spacs,{ customCssUrl: CSS_URL }));
 
 
 
