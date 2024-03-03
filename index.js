@@ -31,7 +31,7 @@ import reportRoutes from "./routes/reportRoutes.js";
 const app = Express();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const openApiYamlPath = path.join(__dirname, "./SchoolManSystemOpenAPI.yaml");
+const openApiYamlPath = path.join(__dirname, "./public/SchoolManSystemOpenAPI.yaml");
 const openapiObject = yaml.load(fs.readFileSync(openApiYamlPath, "utf8"));
 
 app.use(cors());

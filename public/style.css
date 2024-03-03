@@ -17,8 +17,11 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #e7e7f1;
 }
-
+.profile-bar {
+  font-weight: bold;
+}
 .animated-link {
   position: relative;
   text-decoration: none;
@@ -43,7 +46,6 @@ body {
 .sidebar {
   font-family: monospace;
   height: 100vh;
-  border-right: 1px solid #dee2e6;
 }
 .sidebar img {
   width: 100px;
@@ -56,6 +58,7 @@ body {
   color: #050b44;
   margin: 10px 0;
   font-size: 18px;
+  font-weight: bold;
 }
 .logout-button {
   margin-top: 20px;
