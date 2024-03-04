@@ -62,11 +62,13 @@ app.use("/api/report", reportRoutes);
 app.use("/api/file", fileRoutes);
 
 // const CSS_URL =   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+  // customCssUrl: CSS_URL
 
+  
 const options = {
   swaggerDefinition: openapiObject,
   apis: ["./routes/*.js"],
-  // customCssUrl: CSS_URL
+
 };
 
 const swaggerSpec = swaggerJsDoc(options);
