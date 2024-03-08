@@ -132,3 +132,4 @@ dist
 .bash
 *.bash
 .vercel
+.yaml

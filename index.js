@@ -29,18 +29,15 @@ import fileRoutes from "./routes/fileRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 
 const app = Express();
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const openApiYamlPath = path.join(__dirname, "./public/SchoolManSystemOpenAPI.yaml");
-const openapiObject = yaml.load(fs.readFileSync(openApiYamlPath, "utf8"));
-
 app.use(cors());
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 app.use(Morgan("dev"));
-app.use(passport.initialize());
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.use(Express.static(path.join(__dirname, "public")));
+
+app.use(passport.initialize());
 
 setupAssignmentsCronJobs();
 setupScheduleCronJobs();
@@ -62,13 +59,16 @@ app.use("/api/report", reportRoutes);
 app.use("/api/file", fileRoutes);
 
 // const CSS_URL =   "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
-  // customCssUrl: CSS_URL
+// customCssUrl: CSS_URL
+const openApiYamlPath = path.join(
+  __dirname,
+  "./public/SchoolManSystemOpenAPI.yaml"
+);
+const openapiObject = yaml.load(fs.readFileSync(openApiYamlPath, "utf8"));
 
-  
 const options = {
   swaggerDefinition: openapiObject,
   apis: ["./routes/*.js"],
-
 };
 
 const swaggerSpec = swaggerJsDoc(options);
