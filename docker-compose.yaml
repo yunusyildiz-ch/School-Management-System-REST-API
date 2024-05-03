@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  mysql-school:
+    container_name: mysql-school
+    image: mysql
+    platform: linux/arm64/v8
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=school_01
+      - MYSQL_PASSWORD=school_01
+      - MYSQL_USER=admin
+      - MYSQL_DATABASE=School
+    volumes:
+      - ./mysqlDB:/var/lib/meinsql/data
+  phpmyadmin-school:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-school
+    depends_on:
+      - mysql-school
+    environment:
+      PMA_HOST: mysql-school
+    restart: always
+    platform: linux/arm64/v8
+    ports:
+      - 8080:80
